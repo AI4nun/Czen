@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CZEN SHOP - Detail & Alamat</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  .chk-page { min-height: 100vh; display: flex; flex-direction: column; background: #fff; }
+  .chk-body { flex: 1; max-width: 1200px; margin: 0 auto; padding: 30px 40px 80px; width: 100%; box-sizing: border-box; display: grid; grid-template-columns: 1fr 380px; gap: 50px; align-items: start; }
+  .chk-main h1 { font-family: Poppins; font-size: 1.6rem; font-weight: 700; color: #16213e; margin-bottom: 6px; }
+  .chk-steps { display: flex; gap: 8px; font-family: Roboto; font-size: 0.9rem; margin-bottom: 30px; color: #616161; }
+  .chk-steps .active { color: #56B280; font-weight: 600; }
+  .chk-steps .done { color: #56B280; }
+  .chk-steps span.sep { color: #ccc; }
+  .chk-section { margin-bottom: 28px; }
+  .chk-section h2 { font-family: Roboto; font-size: 1.15rem; font-weight: 600; color: #272727; margin-bottom: 14px; }
+  .chk-row { display: flex; gap: 14px; margin-bottom: 14px; }
+  .chk-field { flex: 1; display: flex; flex-direction: column; }
+  .chk-field label { font-size: 0.82rem; font-weight: 500; color: #616161; margin-bottom: 4px; font-family: Roboto; }
+  .chk-field input, .chk-field select { padding: 12px 14px; border: 1px solid #ddd; border-radius: 6px; font-size: 0.95rem; font-family: 'Alegreya Sans', sans-serif; color: #272727; box-sizing: border-box; width: 100%; transition: border-color 0.2s; }
+  .chk-field input:focus, .chk-field select:focus { border-color: #56B280; outline: none; }
+  .chk-field input::placeholder { color: #aaa; }
+  .chk-check { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; font-family: Roboto; font-size: 0.9rem; color: #272727; cursor: pointer; }
+  .chk-check input[type=checkbox] { accent-color: #56B280; width: 16px; height: 16px; cursor: pointer; }
+  .chk-sidebar { background: #f7f8fa; border-radius: 10px; padding: 24px; position: sticky; top: 20px; }
+  .chk-sidebar h3 { font-family: Poppins; font-size: 1rem; font-weight: 600; color: #272727; margin-bottom: 16px; }
+  .chk-sb-item { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; padding-bottom: 14px; border-bottom: 1px solid #e8e8e8; }
+  .chk-sb-item img { width: 60px; height: 48px; object-fit: cover; border-radius: 4px; background: #eef0ee; }
+  .chk-sb-item .sb-info { flex: 1; }
+  .chk-sb-item .sb-info .sb-name { font-family: Poppins; font-size: 0.85rem; font-weight: 600; color: #272727; }
+  .chk-sb-item .sb-info .sb-qty { font-size: 0.8rem; color: #888; font-family: Roboto; }
+  .chk-sb-item .sb-price { font-family: Roboto; font-weight: 600; font-size: 0.9rem; color: #56B280; white-space: nowrap; }
+  .chk-sb-line { display: flex; justify-content: space-between; padding: 4px 0; font-family: Roboto; font-size: 0.9rem; color: #616161; }
+  .chk-sb-line.total { font-size: 1.2rem; font-weight: 700; color: #272727; margin-top: 10px; padding-top: 10px; border-top: 2px solid #ddd; }
+  .btn-submit { width: 100%; padding: 14px; background: #56B280; color: white; border: none; border-radius: 6px; font-size: 1.05rem; font-weight: 600; cursor: pointer; font-family: Roboto; margin-top: 24px; }
+  .btn-submit:hover { background: #479f80; }
+  .btn-back-link { color: #56B280; font-family: Roboto; font-size: 0.9rem; cursor: pointer; text-decoration: underline; display: inline-block; margin-top: 12px; }
+  @media(max-width:860px){ .chk-body { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body class="chk-page">
+
+<header class="site-header">
+  <a href="home.html" class="logo" style="text-decoration:none;color:inherit;"><img src="public/images/logo.png" alt="CZEN SHOP" style="height:52px;width:auto;display:block;margin:0 auto 2px;"><span style="font-size:0.95rem;font-weight:700;letter-spacing:0.5px;display:block;text-align:center;">CZEN SHOP</span></a>
+  <nav class="main-nav">
+    <a href="product.html">Produk</a><a href="home.html#tentang">Tentang</a><a href="home.html#hubungi">Hubungi Kami</a><a href="photobooth.html">Photobooth</a>
+  </nav>
+  <div class="header-icons">
+    <button aria-label="Akun" onclick="location.href='login.html'" style="cursor:pointer;background:none;border:none;font-size:1.2rem;">👤</button>
+    <button aria-label="Keranjang" onclick="location.href='cart.html'" style="cursor:pointer;background:none;border:none;font-size:1.2rem;position:relative;">🛒<span class="cart-badge" style="position:absolute;top:-6px;right:-8px;background:#56B280;color:white;border-radius:50%;width:16px;height:16px;font-size:9px;display:flex;align-items:center;justify-content:center;">0</span></button>
+  </div>
+</header>
+
+<div class="chk-body">
+  <div class="chk-main">
+    <h1>Checkout</h1>
+    <div class="chk-steps">
+      <span class="done">Cart</span><span class="sep">›</span>
+      <span class="active">Details</span><span class="sep">›</span>
+      <span>Shipping</span><span class="sep">›</span>
+      <span>Payment</span>
+    </div>
+
+    <div class="chk-section">
+      <h2>Kontak</h2>
+      <div class="chk-field"><label>Email atau Nomor Telepon</label><input type="text" id="contact" placeholder="Masukkan email atau nomor telepon"></div>
+    </div>
+
+    <div class="chk-section">
+      <h2>Alamat Pengiriman</h2>
+      <div class="chk-row">
+        <div class="chk-field"><label>Nama Depan</label><input type="text" id="firstName" placeholder="Nama depan"></div>
+        <div class="chk-field"><label>Nama Belakang</label><input type="text" id="lastName" placeholder="Nama belakang"></div>
+      </div>
+      <div class="chk-field" style="margin-bottom:14px;"><label>Alamat Lengkap</label><input type="text" id="address" placeholder="Alamat dan nomor rumah"></div>
+      <div class="chk-row">
+        <div class="chk-field"><label>Kota</label><input type="text" id="city" placeholder="Kota"></div>
+        <div class="chk-field"><label>Kode Pos</label><input type="text" id="postal" placeholder="Kode pos"></div>
+        <div class="chk-field"><label>Provinsi</label><select id="province"><option value="">Pilih provinsi</option><option>Jawa Timur</option><option>Jawa Barat</option><option>Jawa Tengah</option><option>DKI Jakarta</option><option>Bali</option><option>DI Yogyakarta</option><option>Banten</option></select></div>
+      </div>
+      <div class="chk-field"><label>Catatan Pengiriman (opsional)</label><input type="text" id="shippingNote" placeholder="Catatan untuk kurir"></div>
+    </div>
+
+    <div class="chk-check"><input type="checkbox" id="saveInfo"><label for="saveInfo">Simpan informasi untuk checkout selanjutnya</label></div>
+    <div class="chk-check"><input type="checkbox" id="newsletter"><label for="newsletter">Tambahkan ke newsletter CZEN SHOP untuk diskon 10%</label></div>
+
+    <button class="btn-submit" onclick="doGoToShipping()">Go to shipping</button>
+    <span class="btn-back-link" onclick="location.href='cart.html'">← Kembali ke Keranjang</span>
+  </div>
+
+  <div class="chk-sidebar" id="sidebar">
+    <h3>Ringkasan Pesanan</h3>
+    <div id="sbItems"></div>
+    <div class="chk-sb-line"><span>Subtotal</span><span id="sbSub">0 IDR</span></div>
+    <div class="chk-sb-line"><span>Pengiriman</span><span style="color:#888;">Dihitung nanti</span></div>
+    <div class="chk-sb-line total"><span>Total</span><span id="sbTotal">0 IDR</span></div>
+  </div>
+</div>
+
+<footer class="site-footer"><div class="container">
+  <div class="footer-top">
+    <div class="footer-brand"><div class="footer-logo"><img src="public/images/logo.png" alt="CZEN SHOP" style="height:32px;width:auto;vertical-align:middle;"><span>CZEN SHOP</span></div><p>Hadir sebagai tempat yang menggabungkan inspirasi desain keramik berkualitas dengan sudut photobooth estetik.</p></div>
+    <div class="footer-col"><h4>Discovery</h4><ul><li onclick="location.href='product.html'" style="cursor:pointer;">New season</li><li onclick="location.href='product.html'" style="cursor:pointer;">Most searched</li><li onclick="location.href='product.html'" style="cursor:pointer;">Most selled</li></ul></div>
+    <div class="footer-col"><h4>About</h4><ul><li>Help</li><li onclick="location.href='shipping.html'" style="cursor:pointer;">Shipping</li><li>Affiliate</li></ul></div>
+    <div class="footer-col"><h4>Info</h4><ul><li>Contact us</li><li>Privacy Policies</li><li>Terms &amp; Conditions</li></ul></div>
+  </div>
+  <div class="footer-address">Ngantang, Kabupaten Malang</div>
+  <div class="footer-bottom"><span>©CzenShop2020 All Rights Reserved.</span><span>Designed by AINUN</span></div>
+</div></footer>
+
+<script src="public/js/database.js"></script>
+<script src="public/js/app.js"></script>
+<script>
+(function(){
+  var C = window.CZEN;
+  function renderSidebar(){
+    var items = C.cart.items();
+    var total = C.cart.total();
+    var h = '';
+    items.forEach(function(i){
+      h += '<div class="chk-sb-item"><img src="'+((i.img||'').indexOf('data:')===0?i.img:'public/images/'+(i.img||'1')+'.png')+'" alt=""><div class="sb-info"><div class="sb-name">'+i.name+'</div><div class="sb-qty">x'+i.qty+'</div></div><div class="sb-price">'+C.fmt(i.sub)+' IDR</div></div>';
+    });
+    document.getElementById('sbItems').innerHTML = h;
+    document.getElementById('sbSub').textContent = C.fmt(total) + ' IDR';
+    document.getElementById('sbTotal').textContent = C.fmt(total) + ' IDR';
+  }
+
+  window.doGoToShipping = function(){
+    var contact = document.getElementById('contact').value.trim();
+    if(!contact){ alert('Mohon isi email atau nomor telepon.'); return; }
+    // Save to session
+    var data = {
+      contact: contact,
+      firstName: document.getElementById('firstName').value.trim(),
+      lastName: document.getElementById('lastName').value.trim(),
+      address: document.getElementById('address').value.trim(),
+      city: document.getElementById('city').value.trim(),
+      postal: document.getElementById('postal').value.trim(),
+      province: document.getElementById('province').value,
+      shippingNote: document.getElementById('shippingNote').value.trim()
+    };
+    sessionStorage.setItem('czen_shipping', JSON.stringify(data));
+    location.href = 'shipping.html';
+  };
+
+  // Pre-fill if coming back
+  try {
+    var saved = JSON.parse(sessionStorage.getItem('czen_shipping') || '{}');
+    if(saved.contact) document.getElementById('contact').value = saved.contact;
+    if(saved.firstName) document.getElementById('firstName').value = saved.firstName;
+    if(saved.lastName) document.getElementById('lastName').value = saved.lastName;
+    if(saved.address) document.getElementById('address').value = saved.address;
+    if(saved.city) document.getElementById('city').value = saved.city;
+    if(saved.postal) document.getElementById('postal').value = saved.postal;
+    if(saved.province) document.getElementById('province').value = saved.province;
+    if(saved.shippingNote) document.getElementById('shippingNote').value = saved.shippingNote;
+  } catch(e) {}
+
+  renderSidebar();
+})();
+</script>
+</body>
+</html>

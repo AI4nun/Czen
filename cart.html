@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CZEN SHOP - Keranjang</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  .cart-page { min-height: 100vh; display: flex; flex-direction: column; background: #fff; }
+  .cart-body { flex: 1; max-width: 1200px; margin: 0 auto; padding: 40px 40px 80px; width: 100%; box-sizing: border-box; }
+  .cart-body h1 { font-family: Poppins; font-size: 1.8rem; font-weight: 700; color: #16213e; text-align: center; margin-bottom: 32px; }
+  .cart-table { width: 100%; border-collapse: collapse; }
+  .cart-table th { text-align: left; padding: 14px 0; border-bottom: 1px solid #e5e5e5; font-family: Roboto; font-weight: 500; font-size: 0.95rem; color: #272727; }
+  .cart-table td { padding: 20px 0; border-bottom: 1px solid #eee; vertical-align: middle; }
+  .cart-item { display: flex; align-items: center; gap: 16px; }
+  .cart-item img { width: 100px; height: 80px; object-fit: cover; border-radius: 6px; background: #f7f8fa; }
+  .cart-item .info h3 { font-family: Poppins; font-size: 1rem; font-weight: 600; color: #272727; margin: 0 0 4px; }
+  .cart-item .info .remove { color: #56B280; font-size: 0.85rem; font-family: Roboto; cursor: pointer; text-decoration: underline; }
+  .qty-box { display: inline-flex; align-items: center; border: 1px solid #56B280; border-radius: 4px; overflow: hidden; }
+  .qty-box button { width: 32px; height: 32px; border: none; background: none; font-size: 1.1rem; cursor: pointer; color: #56B280; font-family: Roboto; }
+  .qty-box button:disabled { color: #ccc; cursor: default; }
+  .qty-box .qty-val { width: 36px; text-align: center; font-family: Roboto; font-size: 0.95rem; font-weight: 500; color: #272727; }
+  .price-col, .sub-col { font-family: Roboto; font-weight: 500; font-size: 1rem; color: #272727; }
+  .cart-summary { margin-top: 30px; text-align: right; }
+  .cart-summary .sub { font-family: Roboto; font-size: 1.1rem; color: #272727; margin-bottom: 8px; }
+  .cart-summary .note { font-size: 0.85rem; color: #9e9e9e; margin-bottom: 16px; font-family: Roboto; }
+  .btn-checkout { display: inline-block; padding: 14px 40px; background: #56B280; color: white; border: none; border-radius: 6px; font-size: 1.1rem; font-weight: 600; cursor: pointer; font-family: Roboto; }
+  .btn-checkout:hover { background: #479f80; }
+  .btn-back { color: #56B280; font-size: 1rem; font-family: Roboto; cursor: pointer; text-decoration: underline; margin-right: 20px; }
+  .empty-cart { text-align: center; padding: 60px 20px; }
+  .empty-cart .icon { font-size: 4rem; margin-bottom: 16px; }
+  .empty-cart p { font-family: Roboto; color: #6b6b6b; font-size: 1rem; margin-bottom: 20px; }
+  .empty-cart .btn-shop { display: inline-block; padding: 12px 30px; background: #56B280; color: white; border-radius: 6px; font-family: Roboto; font-weight: 600; cursor: pointer; text-decoration: none; }
+  /* ── Mobile responsive ── */
+  @media (max-width: 768px) {
+    .cart-body { padding: 20px 14px 60px; }
+    .cart-body h1 { font-size: 1.4rem; }
+    .cart-table thead { display: none; }
+    .cart-table tr { display: block; border: 1px solid #eee; border-radius: 10px; margin-bottom: 14px; padding: 12px; }
+    .cart-table td { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border: none; }
+    .cart-table td::before { content: attr(data-label); font-weight: 600; font-size: 0.8rem; color: #888; margin-right: 10px; }
+    .cart-item img { width: 70px; height: 56px; }
+    .cart-item .info h3 { font-size: 0.9rem; }
+    .cart-summary { text-align: center; }
+    .btn-checkout { width: 100%; }
+    .btn-back { display: block; margin: 0 0 12px; }
+  }
+</style>
+</head>
+<body class="cart-page">
+
+<header class="site-header">
+  <a href="home.html" class="logo" style="text-decoration:none;color:inherit;"><img src="public/images/logo.png" alt="CZEN SHOP" style="height:52px;width:auto;display:block;margin:0 auto 2px;"><span style="font-size:0.95rem;font-weight:700;letter-spacing:0.5px;display:block;text-align:center;">CZEN SHOP</span></a>
+  <nav class="main-nav">
+    <a href="product.html">Produk</a>
+    <a href="home.html#tentang">Tentang</a>
+    <a href="home.html#hubungi">Hubungi Kami</a>
+    <a href="photobooth.html">Photobooth</a>
+  </nav>
+  <div class="header-icons">
+    <button aria-label="Akun" onclick="location.href='login.html'" style="cursor:pointer;background:none;border:none;font-size:1.2rem;">👤</button>
+    <button aria-label="Keranjang" onclick="location.href='cart.html'" style="cursor:pointer;background:none;border:none;font-size:1.2rem;position:relative;">🛒<span class="cart-badge" style="position:absolute;top:-6px;right:-8px;background:#56B280;color:white;border-radius:50%;width:16px;height:16px;font-size:9px;display:flex;align-items:center;justify-content:center;">0</span></button>
+  </div>
+</header>
+
+<div class="cart-body">
+  <h1 id="cartTitle">Keranjang Item</h1>
+  <div id="cartContent"></div>
+</div>
+
+<footer class="site-footer"><div class="container">
+  <div class="footer-top">
+    <div class="footer-brand"><div class="footer-logo"><img src="public/images/logo.png" alt="CZEN SHOP" style="height:32px;width:auto;vertical-align:middle;"><span>CZEN SHOP</span></div><p>Hadir sebagai tempat yang menggabungkan inspirasi desain keramik berkualitas dengan sudut photobooth estetik.</p></div>
+    <div class="footer-col"><h4>Discovery</h4><ul><li onclick="location.href='product.html'" style="cursor:pointer;">New season</li><li onclick="location.href='product.html'" style="cursor:pointer;">Most searched</li><li onclick="location.href='product.html'" style="cursor:pointer;">Most selled</li></ul></div>
+    <div class="footer-col"><h4>About</h4><ul><li>Help</li><li onclick="location.href='shipping.html'" style="cursor:pointer;">Shipping</li><li>Affiliate</li></ul></div>
+    <div class="footer-col"><h4>Info</h4><ul><li>Contact us</li><li>Privacy Policies</li><li>Terms &amp; Conditions</li></ul></div>
+  </div>
+  <div class="footer-address">Ngantang, Kabupaten Malang</div>
+  <div class="footer-bottom"><span>©CzenShop2020 All Rights Reserved.</span><span>Designed by AINUN</span></div>
+</div></footer>
+
+<script src="public/js/database.js"></script>
+<script src="public/js/app.js"></script>
+<script>
+(function(){
+  var C = window.CZEN;
+  function getCart(){ try{return JSON.parse(localStorage.getItem('czen_cart')||'[]');}catch(e){return[];} }
+  function saveCart(items){ localStorage.setItem('czen_cart',JSON.stringify(items)); C.cart.updateBadge(); }
+
+  window.cartRemove = function(id){ saveCart(getCart().filter(function(i){return i.id!==id;})); render(); };
+  window.cartSetQty = function(id,qty){
+    if(qty<1){window.cartRemove(id);return;}
+    var items=getCart(); var f=items.find(function(i){return i.id===id;});
+    if(f)f.qty=qty; else items.push({id:id,qty:qty});
+    saveCart(items); render();
+  };
+
+  function render(){
+    var items = C.cart.items();
+    var ct = document.getElementById('cartContent');
+    var title = document.getElementById('cartTitle');
+
+    if (items.length === 0) {
+      title.textContent = 'Keranjang Kosong';
+      ct.innerHTML = '<div class="empty-cart"><div class="icon">🛒</div><p>Belum ada item di keranjang Anda.</p><a href="product.html" class="btn-shop">Mulai Belanja</a></div>';
+      return;
+    }
+
+    title.textContent = 'Keranjang Item (' + items.length + ')';
+
+    var h = '<table class="cart-table"><thead><tr><th>Produk</th><th style="text-align:center;">Kuantitas</th><th style="text-align:right;">Harga</th><th style="text-align:right;">Subtotal</th></tr></thead><tbody>';
+
+    items.forEach(function(i){
+      h += '<tr>'+
+        '<td><div class="cart-item"><img src="'+((i.img||'').indexOf('data:')===0?i.img:'public/images/'+(i.img||'1')+'.png')+'" alt="'+i.name+'"><div class="info"><h3>'+i.name+'</h3><span class="remove" onclick="window.cartRemove('+i.id+')">Hapus</span></div></div></td>'+
+        '<td style="text-align:center;"><div class="qty-box"><button onclick="window.cartSetQty('+i.id+','+(i.qty-1)+')" '+(i.qty<=1?'disabled':'')+'>−</button><span class="qty-val">'+i.qty+'</span><button onclick="window.cartSetQty('+i.id+','+(i.qty+1)+')">+</button></div></td>'+
+        '<td class="price-col" style="text-align:right;">'+C.fmt(i.price)+' IDR</td>'+
+        '<td class="sub-col" style="text-align:right;">'+C.fmt(i.sub)+' IDR</td>'+
+      '</tr>';
+    });
+
+    h += '</tbody></table>';
+
+    h += '<div class="cart-summary">'+
+      '<div class="sub">Sub-total: <strong>'+C.fmt(C.cart.total())+' IDR</strong></div>'+
+      '<div class="note">PPN dan Ongkir akan dihitung nanti</div>'+
+      '<span class="btn-back" onclick="location.href=\'product.html\'">← Kembali Berbelanja</span>'+
+      '<button class="btn-checkout" onclick="doCheckout()">Check-out</button>'+
+    '</div>';
+
+    ct.innerHTML = h;
+  }
+
+  window.doCheckout = function(){
+    if(getCart().length===0){ alert('Keranjang masih kosong!'); return; }
+    // Wajib login sebelum checkout
+    var user = (window.CZEN && window.CZEN.auth) ? window.CZEN.auth.getUser() : null;
+    if(!user || window.CZEN.auth.isAdmin()){
+      alert('Anda harus login terlebih dahulu untuk checkout.');
+      location.href='login.html';
+      return;
+    }
+    location.href='auth.html';
+  };
+
+  render();
+})();
+</script>
+</body>
+</html>

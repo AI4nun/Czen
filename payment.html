@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CZEN SHOP - Pembayaran</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  .chk-page { min-height: 100vh; display: flex; flex-direction: column; background: #fff; }
+  .chk-body { flex: 1; max-width: 1200px; margin: 0 auto; padding: 30px 40px 80px; width: 100%; box-sizing: border-box; display: grid; grid-template-columns: 1fr 380px; gap: 50px; align-items: start; }
+  .chk-main h1 { font-family: Poppins; font-size: 1.6rem; font-weight: 700; color: #16213e; margin-bottom: 6px; }
+  .chk-steps { display: flex; gap: 8px; font-family: Roboto; font-size: 0.9rem; margin-bottom: 30px; color: #616161; }
+  .chk-steps .active { color: #272727; font-weight: 600; }
+  .chk-steps .done { color: #56B280; }
+  .chk-steps span.sep { color: #ccc; }
+  .chk-section { margin-bottom: 28px; }
+  .chk-section h2 { font-family: Roboto; font-size: 1.15rem; font-weight: 600; color: #272727; margin-bottom: 14px; }
+  .info-box { background: #f9fafb; border: 1px solid rgba(86,178,128,0.2); border-radius: 8px; padding: 16px 20px; font-family: 'Alegreya Sans', sans-serif; font-size: 0.95rem; color: #272727; line-height: 1.6; margin-bottom: 10px; }
+  .info-box .edit { color: #56B280; cursor: pointer; float: right; font-family: Roboto; font-size: 0.85rem; }
+  .card-form { background: linear-gradient(135deg, rgba(86,178,128,0.15), rgba(86,178,128,0.3)); border: 1px solid #e5e5e5; border-radius: 10px; padding: 24px; }
+  .chk-field { flex: 1; display: flex; flex-direction: column; margin-bottom: 14px; }
+  .chk-field label { font-size: 0.82rem; font-weight: 500; color: #616161; margin-bottom: 4px; font-family: Roboto; }
+  .chk-field input { padding: 12px 14px; border: 1px solid #ddd; border-radius: 6px; font-size: 0.95rem; font-family: 'Alegreya Sans', sans-serif; color: #272727; box-sizing: border-box; width: 100%; transition: border-color 0.2s; }
+  .chk-field input:focus { border-color: #56B280; outline: none; }
+  .chk-row { display: flex; gap: 14px; }
+  .billing-option { display: flex; align-items: center; gap: 14px; padding: 12px 18px; border: 1px solid #e5e5e5; border-radius: 8px; margin-bottom: 10px; cursor: pointer; }
+  .billing-option.selected { border-color: #56B280; background: #f8fdf9; }
+  .billing-option input[type=radio] { accent-color: #56B280; width: 18px; height: 18px; cursor: pointer; }
+  .billing-option span { font-family: 'Alegreya Sans', sans-serif; font-size: 0.95rem; }
+  .chk-sidebar { background: #f7f8fa; border-radius: 10px; padding: 24px; position: sticky; top: 20px; }
+  .chk-sidebar h3 { font-family: Poppins; font-size: 1rem; font-weight: 600; color: #272727; margin-bottom: 16px; }
+  .chk-sb-line { display: flex; justify-content: space-between; padding: 4px 0; font-family: Roboto; font-size: 0.9rem; color: #616161; }
+  .chk-sb-line.total { font-size: 1.2rem; font-weight: 700; color: #272727; margin-top: 10px; padding-top: 10px; border-top: 2px solid #ddd; }
+  .btn-submit { width: 100%; padding: 16px; background: #56B280; color: white; border: none; border-radius: 6px; font-size: 1.1rem; font-weight: 600; cursor: pointer; font-family: Roboto; margin-top: 24px; }
+  .btn-submit:hover { background: #479f80; }
+  .btn-back-link { color: #56B280; font-family: Roboto; font-size: 0.9rem; cursor: pointer; text-decoration: underline; display: inline-block; margin-top: 12px; }
+  .secure-badge { display: flex; align-items: center; gap: 6px; font-size: 0.8rem; color: #888; font-family: Roboto; margin-top: 12px; }
+  @media(max-width:860px){ .chk-body { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body class="chk-page">
+
+<header class="site-header">
+  <a href="home.html" class="logo" style="text-decoration:none;color:inherit;"><img src="public/images/logo.png" alt="CZEN SHOP" style="height:52px;width:auto;display:block;margin:0 auto 2px;"><span style="font-size:0.95rem;font-weight:700;letter-spacing:0.5px;display:block;text-align:center;">CZEN SHOP</span></a>
+  <nav class="main-nav">
+    <a href="product.html">Produk</a><a href="home.html#tentang">Tentang</a><a href="home.html#hubungi">Hubungi Kami</a><a href="photobooth.html">Photobooth</a>
+  </nav>
+  <div class="header-icons">
+    <button aria-label="Akun" onclick="location.href='login.html'" style="cursor:pointer;background:none;border:none;font-size:1.2rem;">👤</button>
+    <button aria-label="Keranjang" onclick="location.href='cart.html'" style="cursor:pointer;background:none;border:none;font-size:1.2rem;position:relative;">🛒<span class="cart-badge" style="position:absolute;top:-6px;right:-8px;background:#56B280;color:white;border-radius:50%;width:16px;height:16px;font-size:9px;display:flex;align-items:center;justify-content:center;">0</span></button>
+  </div>
+</header>
+
+<div class="chk-body">
+  <div class="chk-main">
+    <h1>Checkout</h1>
+    <div class="chk-steps">
+      <span class="done">Cart</span><span class="sep">›</span>
+      <span class="done">Details</span><span class="sep">›</span>
+      <span class="done">Shipping</span><span class="sep">›</span>
+      <span class="active">Payment</span>
+    </div>
+
+    <div class="chk-section">
+      <h2>Ringkasan</h2>
+      <div class="info-box"><span class="edit" onclick="location.href='shipping.html'">Edit</span><div><strong>Kontak:</strong> <span id="dispContact">-</span></div><div><strong>Alamat:</strong> <span id="dispAddress">-</span></div><div><strong>Pengiriman:</strong> <span id="dispShip">-</span></div></div>
+    </div>
+
+    <div class="chk-section">
+      <h2>Metode Pembayaran</h2>
+      <div style="display:flex;gap:10px;margin-bottom:16px;">
+        <button id="tabCard" class="pay-tab active" onclick="switchPayMethod('card')" style="flex:1;padding:12px;border:2px solid #56B280;background:#f0faf5;border-radius:8px;cursor:pointer;font-family:Roboto;font-weight:600;font-size:0.95rem;color:#56B280;">💳 Credit Card</button>
+        <button id="tabQris" class="pay-tab" onclick="switchPayMethod('qris')" style="flex:1;padding:12px;border:2px solid #e5e5e5;background:#fff;border-radius:8px;cursor:pointer;font-family:Roboto;font-weight:600;font-size:0.95rem;color:#888;">📱 QRIS</button>
+      </div>
+
+      <!-- Credit Card Form -->
+      <div id="payCardSection">
+        <div class="card-form">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:18px;color:#56B280;font-family:Roboto;font-weight:700;font-size:1rem;">💳 Credit Card</div>
+          <div class="chk-field"><label>Nomor Kartu</label><input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19"></div>
+          <div class="chk-field"><label>Nama Pemegang Kartu</label><input type="text" id="cardHolder" placeholder="Nama sesuai kartu"></div>
+          <div class="chk-row">
+            <div class="chk-field"><label>Expiration (MM/YY)</label><input type="text" id="cardExpiry" placeholder="MM/YY" maxlength="5"></div>
+            <div class="chk-field"><label>CVV</label><input type="text" id="cardCvv" placeholder="123" maxlength="4"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- QRIS Section -->
+      <div id="payQrisSection" style="display:none;">
+        <div style="text-align:center;padding:24px;background:linear-gradient(135deg, rgba(86,178,128,0.08), rgba(86,178,128,0.18));border:1px solid #e5e5e5;border-radius:10px;">
+          <div style="font-family:Roboto;font-weight:700;font-size:1rem;color:#272727;margin-bottom:4px;">📱 Scan QRIS untuk Membayar</div>
+          <div style="font-family:Roboto;font-size:0.85rem;color:#888;margin-bottom:16px;">Total: <strong id="qrisTotal" style="color:#56B280;">0 IDR</strong></div>
+          <canvas id="qrisCanvas" width="220" height="220" style="background:#fff;border-radius:12px;border:2px solid #56B280;padding:8px;margin:0 auto;"></canvas>
+          <div style="font-family:Roboto;font-size:0.8rem;color:#888;margin-top:12px;">CZEN SHOP • E-Wallet Admin (Dummy)</div>
+          <div style="font-family:Roboto;font-size:0.75rem;color:#aaa;margin-top:4px;">Dana akan masuk ke e-wallet admin setelah konfirmasi</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chk-section">
+      <h2>Alamat Penagihan</h2>
+      <label class="billing-option selected">
+        <input type="radio" name="billing" value="same" checked onchange="document.querySelectorAll('.billing-option').forEach(function(l){l.classList.remove('selected')});this.closest('.billing-option').classList.add('selected');">
+        <span>Sama dengan alamat pengiriman</span>
+      </label>
+      <label class="billing-option">
+        <input type="radio" name="billing" value="different" onchange="document.querySelectorAll('.billing-option').forEach(function(l){l.classList.remove('selected')});this.closest('.billing-option').classList.add('selected');">
+        <span>Gunakan alamat berbeda untuk penagihan</span>
+      </label>
+    </div>
+
+    <div class="chk-section">
+      <h2>Informasi Pajak</h2>
+      <div class="chk-row">
+        <div class="chk-field"><label>NPWP / VAT Number (opsional)</label><input type="text" id="vat" placeholder="Nomor NPWP"></div>
+        <div class="chk-field"><label>PEC (opsional)</label><input type="text" id="pec" placeholder="PEC"></div>
+      </div>
+    </div>
+
+    <button class="btn-submit" id="payBtn" onclick="doPayNow()">Pay now</button>
+    <div class="secure-badge">🔒 Pembayaran aman dengan enkripsi SSL</div>
+    <span class="btn-back-link" onclick="location.href='shipping.html'">← Back to shipping</span>
+  </div>
+
+  <div class="chk-sidebar">
+    <h3>Ringkasan Pesanan</h3>
+    <div class="chk-sb-line"><span>Subtotal</span><span id="sbSub">0 IDR</span></div>
+    <div class="chk-sb-line"><span>Pengiriman</span><span id="sbShip">-</span></div>
+    <div class="chk-sb-line total"><span>Total</span><span id="sbTotal">0 IDR</span></div>
+  </div>
+</div>
+
+<footer class="site-footer"><div class="container">
+  <div class="footer-top">
+    <div class="footer-brand"><div class="footer-logo"><img src="public/images/logo.png" alt="CZEN SHOP" style="height:32px;width:auto;vertical-align:middle;"><span>CZEN SHOP</span></div><p>Hadir sebagai tempat yang menggabungkan inspirasi desain keramik berkualitas dengan sudut photobooth estetik.</p></div>
+    <div class="footer-col"><h4>Discovery</h4><ul><li onclick="location.href='product.html'" style="cursor:pointer;">New season</li><li onclick="location.href='product.html'" style="cursor:pointer;">Most searched</li><li onclick="location.href='product.html'" style="cursor:pointer;">Most selled</li></ul></div>
+    <div class="footer-col"><h4>About</h4><ul><li>Help</li><li onclick="location.href='shipping.html'" style="cursor:pointer;">Shipping</li><li>Affiliate</li></ul></div>
+    <div class="footer-col"><h4>Info</h4><ul><li>Contact us</li><li>Privacy Policies</li><li>Terms &amp; Conditions</li></ul></div>
+  </div>
+  <div class="footer-address">Ngantang, Kabupaten Malang</div>
+  <div class="footer-bottom"><span>©CzenShop2020 All Rights Reserved.</span><span>Designed by AINUN</span></div>
+</div></footer>
+
+<script src="public/js/database.js"></script>
+<script src="public/js/app.js"></script>
+<script>
+(function(){
+  var C = window.CZEN;
+  var shipCost = parseInt(sessionStorage.getItem('czen_shipCost')||'0');
+  var payMethod = 'card';
+
+  try {
+    var s = JSON.parse(sessionStorage.getItem('czen_shipping') || '{}');
+    document.getElementById('dispContact').textContent = s.contact || '-';
+    document.getElementById('dispAddress').textContent = [s.address,s.city,s.province,s.postal].filter(Boolean).join(', ') || '-';
+    document.getElementById('dispShip').textContent = shipCost===0?'Standard Shipping - GRATIS':shipCost===15000?'Express Shipping - 15.000 IDR':'Same Day - 35.000 IDR';
+  } catch(e) {}
+
+  renderSidebar();
+  drawQris();
+
+  function renderSidebar(){
+    var sub = C.cart.total();
+    var total = sub + shipCost;
+    document.getElementById('sbSub').textContent = C.fmt(sub) + ' IDR';
+    document.getElementById('sbShip').textContent = shipCost===0?'Gratis':C.fmt(shipCost)+' IDR';
+    document.getElementById('sbTotal').textContent = C.fmt(total) + ' IDR';
+    document.getElementById('qrisTotal').textContent = C.fmt(total) + ' IDR';
+  }
+
+  // Switch payment method
+  window.switchPayMethod = function(m){
+    payMethod = m;
+    document.getElementById('tabCard').classList.toggle('active', m==='card');
+    document.getElementById('tabQris').classList.toggle('active', m==='qris');
+    document.getElementById('tabCard').style.cssText = m==='card' ? 'flex:1;padding:12px;border:2px solid #56B280;background:#f0faf5;border-radius:8px;cursor:pointer;font-family:Roboto;font-weight:600;font-size:0.95rem;color:#56B280;' : 'flex:1;padding:12px;border:2px solid #e5e5e5;background:#fff;border-radius:8px;cursor:pointer;font-family:Roboto;font-weight:600;font-size:0.95rem;color:#888;';
+    document.getElementById('tabQris').style.cssText = m==='qris' ? 'flex:1;padding:12px;border:2px solid #56B280;background:#f0faf5;border-radius:8px;cursor:pointer;font-family:Roboto;font-weight:600;font-size:0.95rem;color:#56B280;' : 'flex:1;padding:12px;border:2px solid #e5e5e5;background:#fff;border-radius:8px;cursor:pointer;font-family:Roboto;font-weight:600;font-size:0.95rem;color:#888;';
+    document.getElementById('payCardSection').style.display = m==='card' ? '' : 'none';
+    document.getElementById('payQrisSection').style.display = m==='qris' ? '' : 'none';
+    document.getElementById('payBtn').textContent = m==='qris' ? 'Konfirmasi Pembayaran QRIS' : 'Pay now';
+  };
+
+  // Draw fake QR code
+  function drawQris(){
+    var cv = document.getElementById('qrisCanvas');
+    var ctx = cv.getContext('2d');
+    var n = 25, cell = Math.floor(220/n);
+    var seed = 1234567;
+    function rnd(){ seed = (seed*1103515245 + 12345) & 0x7fffffff; return seed/0x7fffffff; }
+    ctx.fillStyle = '#fff'; ctx.fillRect(0,0,220,220);
+    ctx.fillStyle = '#000';
+    // Finder patterns (3 corners)
+    function finder(x,y){
+      ctx.fillRect(x,y,7*cell,7*cell);
+      ctx.fillStyle='#fff'; ctx.fillRect(x+cell,y+cell,5*cell,5*cell);
+      ctx.fillStyle='#000'; ctx.fillRect(x+2*cell,y+2*cell,3*cell,3*cell);
+    }
+    finder(0,0); finder(220-7*cell,0); finder(0,220-7*cell);
+    // Random data modules
+    for(var i=0;i<n;i++){
+      for(var j=0;j<n;j++){
+        var inFinder = (i<8&&j<8)||(i>n-9&&j<8)||(i<8&&j>n-9);
+        if(!inFinder && rnd()>0.52){ ctx.fillRect(i*cell,j*cell,cell,cell); }
+      }
+    }
+  }
+
+  // Auto-format card number
+  document.getElementById('cardNumber').addEventListener('input',function(e){
+    var v = this.value.replace(/\\s/g,'').replace(/[^0-9]/g,'');
+    if(v.length>16)v=v.slice(0,16);
+    this.value = v.replace(/(.{4})/g,'$1 ').trim();
+  });
+  document.getElementById('cardExpiry').addEventListener('input',function(e){
+    var v = this.value.replace(/[^0-9]/g,'');
+    if(v.length>4)v=v.slice(0,4);
+    if(v.length>=3)v=v.slice(0,2)+'/'+v.slice(2);
+    this.value = v;
+  });
+
+  window.doPayNow = function(){
+    var btn = document.getElementById('payBtn');
+    var total = C.cart.total() + shipCost;
+
+    if(payMethod === 'card'){
+      var cn = document.getElementById('cardNumber').value.replace(/\\s/g,'');
+      var ch = document.getElementById('cardHolder').value.trim();
+      var ce = document.getElementById('cardExpiry').value.trim();
+      var cv = document.getElementById('cardCvv').value.trim();
+      if(!cn||!ch||!ce||!cv){ alert('Mohon lengkapi data kartu.'); return; }
+      if(cn.length<13){ alert('Nomor kartu tidak valid.'); return; }
+
+      btn.textContent = 'Memproses...';
+      btn.disabled = true;
+      setTimeout(function(){
+        var order = {
+          id: 'ORD-'+Date.now().toString(36).toUpperCase(),
+          contact: document.getElementById('dispContact').textContent,
+          address: document.getElementById('dispAddress').textContent,
+          shipCost: shipCost,
+          cardLast: cn.slice(-4),
+          method: 'Credit Card',
+          total: total,
+          date: new Date().toISOString()
+        };
+        sessionStorage.setItem('czen_order', JSON.stringify(order));
+        location.href = 'receipt.html';
+      }, 1500);
+    } else {
+      // QRIS payment
+      btn.textContent = 'Memproses QRIS...';
+      btn.disabled = true;
+      setTimeout(function(){
+        // Add money to admin e-wallet (dummy)
+        try {
+          var wallet = JSON.parse(localStorage.getItem('czen_ewallet') || '{"balance":0,"transactions":[]}');
+          wallet.balance += total;
+          wallet.transactions.push({ id: 'TRX-'+Date.now().toString(36).toUpperCase(), amount: total, method: 'QRIS', date: new Date().toISOString() });
+          localStorage.setItem('czen_ewallet', JSON.stringify(wallet));
+        } catch(e){}
+        var order = {
+          id: 'ORD-'+Date.now().toString(36).toUpperCase(),
+          contact: document.getElementById('dispContact').textContent,
+          address: document.getElementById('dispAddress').textContent,
+          shipCost: shipCost,
+          method: 'QRIS',
+          total: total,
+          date: new Date().toISOString()
+        };
+        sessionStorage.setItem('czen_order', JSON.stringify(order));
+        location.href = 'receipt.html';
+      }, 1800);
+    }
+  };
+})();
+</script>
+</body>
+</html>

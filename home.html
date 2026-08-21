@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CZEN SHOP</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  .product-card { cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; }
+  .product-card:hover { transform: translateY(-4px); box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); }
+  .product-card a { text-decoration: none; color: inherit; display: block; }
+  .footer-col ul li { cursor: pointer; }
+  .footer-col ul li:hover { color: #56B280; }
+  .btn { cursor: pointer; text-decoration: none; }
+  .main-nav a { cursor: pointer; }
+  .main-nav a:hover { color: #56B280; }
+</style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="logo">
+      <img src="public/images/logo.png" alt="CZEN SHOP" style="height:52px;width:auto;display:block;margin:0 auto 2px;">
+      <span style="font-size:0.95rem;font-weight:700;letter-spacing:0.5px;">CZEN SHOP</span>
+    </div>
+    <nav class="main-nav">
+      <a href="product.html">Produk</a>
+      <a href="#tentang">Tentang</a>
+      <a href="#hubungi">Hubungi Kami</a>
+      <a href="photobooth.html">Photobooth</a>
+    </nav>
+    <div class="header-icons">
+      <button aria-label="Akun" onclick="window.location.href='login.html'" style="cursor:pointer;">👤</button>
+      <button aria-label="Keranjang" onclick="window.location.href='cart.html'" style="cursor:pointer;">🛒</button>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero" style="padding:0; min-height:0; background-image:url('public/images/bg-head.jpg'); background-size:cover; background-position:center; background-repeat:no-repeat; display:flex; align-items:center; justify-content:center;">
+    <div class="hero-card" style="margin:120px auto; max-width:560px;">
+      <div class="hero-sprout">🌱</div>
+      <h1>From timeless tiles to timeless memories.</h1>
+      <p>Temukan koleksi keramik berkualitas dan abadikan setiap momen di photobooth yang dirancang dengan nuansa modern dan Instagramable</p>
+      <a href="product.html" class="btn">Koleksi Kami</a>
+    </div>
+  </section>
+
+  <!-- PRODUK -->
+  <section class="section" id="produk">
+    <div class="container">
+      <div class="section-heading">
+        <h2>Produk</h2>
+        <p>Order it for you or for your beloved ones</p>
+      </div>
+
+      <div class="product-grid">
+        <div class="product-card" onclick="window.location.href='detail_product.html?id=1&product=Keramik+Foto+Mickey&img=1'">
+          <div class="product-thumb thumb-1"><img src="public/images/1.png" class="product-thumb-img" alt="" loading="lazy"></div>
+          <div class="product-info">
+            <h3>Keramik Foto Mickey</h3>
+            <div class="product-price">10.000 IDR</div>
+          </div>
+        </div>
+        <div class="product-card" onclick="window.location.href='detail_product.html?id=2&product=Keramik+Foto+Baju&img=2'">
+          <div class="product-thumb thumb-2"><img src="public/images/2.png" class="product-thumb-img" alt="" loading="lazy"></div>
+          <div class="product-info">
+            <h3>Keramik Foto Baju</h3>
+            <div class="product-price">10.000 IDR</div>
+          </div>
+        </div>
+        <div class="product-card" onclick="window.location.href='detail_product.html?id=3&product=Keramik+Foto+Buah&img=3'">
+          <div class="product-thumb thumb-3"><img src="public/images/3.png" class="product-thumb-img" alt="" loading="lazy"></div>
+          <div class="product-info">
+            <h3>Keramik Foto Buah</h3>
+            <div class="product-price">10.000 IDR</div>
+          </div>
+        </div>
+        <div class="product-card" onclick="window.location.href='detail_product.html?id=4&product=Mickey+Pantai&img=4'">
+          <div class="product-thumb thumb-4"><img src="public/images/4.png" class="product-thumb-img" alt="" loading="lazy"></div>
+          <div class="product-info">
+            <h3>Mickey Pantai</h3>
+            <div class="product-price">10.000 IDR</div>
+          </div>
+        </div>
+        <div class="product-card" onclick="window.location.href='detail_product.html?id=5&product=Keramik+Doll&img=5'">
+          <div class="product-thumb thumb-5"><img src="public/images/5.png" class="product-thumb-img" alt="" loading="lazy"></div>
+          <div class="product-info">
+            <h3>Keramik Doll</h3>
+            <div class="product-price">10.000 IDR</div>
+          </div>
+        </div>
+        <div class="product-card" onclick="window.location.href='detail_product.html?id=6&product=Keramik+Happy+Time&img=6'">
+          <div class="product-thumb thumb-6"><img src="public/images/6.png" class="product-thumb-img" alt="" loading="lazy"></div>
+          <div class="product-info">
+            <h3>Keramik Foto Happy Time</h3>
+            <div class="product-price">10.000 IDR</div>
+          </div>
+        </div>
+        <div class="product-card" onclick="window.location.href='detail_product.html?id=7&product=Keramik+Sweet+Bee&img=7'">
+          <div class="product-thumb thumb-7"><img src="public/images/7.png" class="product-thumb-img" alt="" loading="lazy"></div>
+          <div class="product-info">
+            <h3>Keramik Foto Sweet Bee</h3>
+            <div class="product-price">10.000 IDR</div>
+          </div>
+        </div>
+        <div class="product-card" onclick="window.location.href='detail_product.html?id=8&product=Keramik+Koala&img=8'">
+          <div class="product-thumb thumb-8"><img src="public/images/8.png" class="product-thumb-img" alt="" loading="lazy"></div>
+          <div class="product-info">
+            <h3>Keramik Foto Koala</h3>
+            <div class="product-price">10.000 IDR</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features" id="tentang">
+    <div class="container features-inner">
+      <div class="features-text">
+        <h2>New Features<br>Only One at<br>CZENSHOP</h2>
+        <p class="features-tagline">Buat Momen yang tak terlupakan bersama Czen</p>
+        <ul class="features-list">
+          <li><span class="check">✓</span> Buat Momen Bersama CZEN</li>
+          <li><span class="check">✓</span> Buat Photo Frame mu sendiri</li>
+          <li><span class="check">✓</span> Kreativitaskan imajinasi</li>
+          <li><span class="check">✓</span> Banyak pilihan dan event template</li>
+        </ul>
+        <button class="btn">Lebih Lanjut</button>
+      </div>
+
+      <div class="features-image">
+        <div class="mock-strip">
+          <div class="panel panel-dark">
+            <div class="strip-label">9th Anniversary NCT127</div>
+            <div class="photo-slot">photo</div>
+            <div class="photo-slot">photo</div>
+            <div class="big-label">ON THE<br>127 BEAT</div>
+            <div class="photo-slot">photo</div>
+          </div>
+          <div class="panel panel-light">
+            <div class="photo-slot light">photo</div>
+            <div class="photo-slot light">photo</div>
+            <div class="photo-slot light">photo</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials">
+    <div class="container">
+      <div class="section-heading">
+        <h2>Testimonials</h2>
+        <p>Beberapa Testimoni Pelanggan Kami</p>
+      </div>
+
+      <div class="testi-grid">
+        <div class="testi-card">
+          <div class="testi-avatar" style="background:#e2b98a;">S</div>
+          <div class="testi-stars">★★★★<span class="empty">★</span></div>
+          <div class="testi-quote">&ldquo;Mantap, lengkap&rdquo;</div>
+          <div class="testi-name">Sarah</div>
+        </div>
+        <div class="testi-card">
+          <div class="testi-avatar" style="background:#2b2b2b;">J</div>
+          <div class="testi-stars">★★★★★</div>
+          <div class="testi-quote">&ldquo;Nice&rdquo;</div>
+          <div class="testi-name">Joong</div>
+        </div>
+        <div class="testi-card">
+          <div class="testi-avatar" style="background:#4a4a4a;">P</div>
+          <div class="testi-stars">★★★★<span class="empty">★</span></div>
+          <div class="testi-quote">&ldquo;Looks very natural is awesome&rdquo;</div>
+          <div class="testi-name">Prim</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- POPULAR -->
+  <section class="section">
+    <div class="container">
+      <div class="section-heading">
+        <h2>Popular</h2>
+        <p>Produk Terpopuler kami</p>
+      </div>
+
+      <div class="product-grid">
+        <div class="product-card" onclick="window.location.href='detail_product.html?id=1&product=Keramik+Foto+Mickey&img=1'">
+          <div class="product-thumb thumb-1"><img src="public/images/1.png" class="product-thumb-img" alt="" loading="lazy"></div>
+          <div class="product-info">
+            <h3>Keramik Foto Mickey</h3>
+            <div class="product-price">10.000 IDR</div>
+          </div>
+        </div>
+        <div class="product-card" onclick="window.location.href='detail_product.html?id=6&product=Keramik+Happy+Time&img=6'">
+          <div class="product-thumb thumb-6"><img src="public/images/6.png" class="product-thumb-img" alt="" loading="lazy"></div>
+          <div class="product-info">
+            <h3>Keramik Foto Happy Time</h3>
+            <div class="product-price">10.000 IDR</div>
+          </div>
+        </div>
+        <div class="product-card" onclick="window.location.href='detail_product.html?id=5&product=Keramik+Doll&img=5'">
+          <div class="product-thumb thumb-5"><img src="public/images/5.png" class="product-thumb-img" alt="" loading="lazy"></div>
+          <div class="product-info">
+            <h3>Keramik Doll</h3>
+            <div class="product-price">10.000 IDR</div>
+          </div>
+        </div>
+        <div class="product-card" onclick="window.location.href='detail_product.html?id=8&product=Foto+Frame&img=8'">
+          <div class="product-thumb thumb-8" style="background:#111;padding:0;">
+            <img src="public/images/8.png" class="product-thumb-img" alt="" loading="lazy" style="filter: grayscale(1) brightness(2);">
+          </div>
+          <div class="product-info">
+            <h3>Foto Frame</h3>
+            <div class="product-price">10.000 IDR</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer" id="hubungi">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <img src="public/images/logo.png" alt="CZEN SHOP" style="height:32px;width:auto;vertical-align:middle;">
+            <span>CZEN SHOP</span>
+          </div>
+          <p>Hadir sebagai tempat yang menggabungkan inspirasi desain keramik berkualitas dengan sudut photobooth estetik.</p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Discovery</h4>
+          <ul>
+            <li onclick="window.location.href='product.html'">New season</li>
+            <li onclick="window.location.href='product.html'">Most searched</li>
+            <li onclick="window.location.href='product.html'">Most selled</li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>About</h4>
+          <ul>
+            <li>Help</li>
+            <li>Shipping</li>
+            <li>Affiliate</li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Info</h4>
+          <ul>
+            <li>Contact us</li>
+            <li>Privacy Policies</li>
+            <li>Terms &amp; Conditions</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-address">Ngantang, Kabupaten Malang</div>
+
+      <div class="footer-bottom">
+        <span>©CzenShop2020 All Rights Reserved.</span>
+        <span>Designed by AINUN</span>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

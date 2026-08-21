@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CZEN SHOP - Pengiriman</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  .chk-page { min-height: 100vh; display: flex; flex-direction: column; background: #fff; }
+  .chk-body { flex: 1; max-width: 1200px; margin: 0 auto; padding: 30px 40px 80px; width: 100%; box-sizing: border-box; display: grid; grid-template-columns: 1fr 380px; gap: 50px; align-items: start; }
+  .chk-main h1 { font-family: Poppins; font-size: 1.6rem; font-weight: 700; color: #16213e; margin-bottom: 6px; }
+  .chk-steps { display: flex; gap: 8px; font-family: Roboto; font-size: 0.9rem; margin-bottom: 30px; color: #616161; }
+  .chk-steps .active { color: #272727; font-weight: 600; }
+  .chk-steps .done { color: #56B280; }
+  .chk-steps span.sep { color: #ccc; }
+  .chk-section { margin-bottom: 28px; }
+  .chk-section h2 { font-family: Roboto; font-size: 1.15rem; font-weight: 600; color: #272727; margin-bottom: 14px; }
+  .info-box { background: #f9fafb; border: 1px solid rgba(86,178,128,0.2); border-radius: 8px; padding: 16px 20px; font-family: 'Alegreya Sans', sans-serif; font-size: 0.95rem; color: #272727; line-height: 1.6; }
+  .info-box .edit { color: #56B280; cursor: pointer; float: right; font-family: Roboto; font-size: 0.85rem; }
+  .ship-option { display: flex; align-items: center; gap: 14px; padding: 14px 18px; border: 1px solid #e5e5e5; border-radius: 8px; margin-bottom: 10px; cursor: pointer; transition: border-color 0.2s; }
+  .ship-option.selected { border-color: #56B280; background: #f8fdf9; }
+  .ship-option input[type=radio] { accent-color: #56B280; width: 18px; height: 18px; cursor: pointer; }
+  .ship-option .ship-info { flex: 1; }
+  .ship-option .ship-info .ship-name { font-family: 'Alegreya Sans', sans-serif; font-size: 1rem; font-weight: 600; color: #272727; }
+  .ship-option .ship-info .ship-desc { font-size: 0.82rem; color: #888; font-family: Roboto; }
+  .ship-option .ship-price { font-family: Roboto; font-weight: 700; font-size: 0.95rem; color: #272727; }
+  .chk-sidebar { background: #f7f8fa; border-radius: 10px; padding: 24px; position: sticky; top: 20px; }
+  .chk-sidebar h3 { font-family: Poppins; font-size: 1rem; font-weight: 600; color: #272727; margin-bottom: 16px; }
+  .chk-sb-line { display: flex; justify-content: space-between; padding: 4px 0; font-family: Roboto; font-size: 0.9rem; color: #616161; }
+  .chk-sb-line.total { font-size: 1.2rem; font-weight: 700; color: #272727; margin-top: 10px; padding-top: 10px; border-top: 2px solid #ddd; }
+  .btn-submit { width: 100%; padding: 14px; background: #56B280; color: white; border: none; border-radius: 6px; font-size: 1.05rem; font-weight: 600; cursor: pointer; font-family: Roboto; margin-top: 24px; }
+  .btn-submit:hover { background: #479f80; }
+  .btn-back-link { color: #56B280; font-family: Roboto; font-size: 0.9rem; cursor: pointer; text-decoration: underline; display: inline-block; margin-top: 12px; }
+  @media(max-width:860px){ .chk-body { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body class="chk-page">
+
+<header class="site-header">
+  <a href="home.html" class="logo" style="text-decoration:none;color:inherit;"><img src="public/images/logo.png" alt="CZEN SHOP" style="height:52px;width:auto;display:block;margin:0 auto 2px;"><span style="font-size:0.95rem;font-weight:700;letter-spacing:0.5px;display:block;text-align:center;">CZEN SHOP</span></a>
+  <nav class="main-nav">
+    <a href="product.html">Produk</a><a href="home.html#tentang">Tentang</a><a href="home.html#hubungi">Hubungi Kami</a><a href="photobooth.html">Photobooth</a>
+  </nav>
+  <div class="header-icons">
+    <button aria-label="Akun" onclick="location.href='login.html'" style="cursor:pointer;background:none;border:none;font-size:1.2rem;">👤</button>
+    <button aria-label="Keranjang" onclick="location.href='cart.html'" style="cursor:pointer;background:none;border:none;font-size:1.2rem;position:relative;">🛒<span class="cart-badge" style="position:absolute;top:-6px;right:-8px;background:#56B280;color:white;border-radius:50%;width:16px;height:16px;font-size:9px;display:flex;align-items:center;justify-content:center;">0</span></button>
+  </div>
+</header>
+
+<div class="chk-body">
+  <div class="chk-main">
+    <h1>Checkout</h1>
+    <div class="chk-steps">
+      <span class="done">Cart</span><span class="sep">›</span>
+      <span class="done">Details</span><span class="sep">›</span>
+      <span class="active">Shipping</span><span class="sep">›</span>
+      <span>Payment</span>
+    </div>
+
+    <div class="chk-section">
+      <h2>Kontak & Alamat</h2>
+      <div class="info-box">
+        <span class="edit" onclick="location.href='auth.html'">Edit</span>
+        <div><strong>Kontak:</strong> <span id="dispContact">-</span></div>
+        <div><strong>Alamat:</strong> <span id="dispAddress">-</span></div>
+        <div><strong>Kota:</strong> <span id="dispCity">-</span>, <span id="dispProvince">-</span> <span id="dispPostal">-</span></div>
+      </div>
+    </div>
+
+    <div class="chk-section">
+      <h2>Metode Pengiriman</h2>
+      <div id="shipOptions">
+        <label class="ship-option selected">
+          <input type="radio" name="shipping" value="standard" checked onchange="selectShip(this)">
+          <div class="ship-info"><div class="ship-name">Standard Shipping</div><div class="ship-desc">Estimasi 3-5 hari kerja</div></div>
+          <div class="ship-price">GRATIS</div>
+        </label>
+        <label class="ship-option">
+          <input type="radio" name="shipping" value="express" onchange="selectShip(this)">
+          <div class="ship-info"><div class="ship-name">Express Shipping</div><div class="ship-desc">Estimasi 1-2 hari kerja</div></div>
+          <div class="ship-price">15.000 IDR</div>
+        </label>
+        <label class="ship-option">
+          <input type="radio" name="shipping" value="same-day" onchange="selectShip(this)">
+          <div class="ship-info"><div class="ship-name">Same Day Delivery</div><div class="ship-desc">Pesanan diterima hari ini juga (tersedia di area tertentu)</div></div>
+          <div class="ship-price">35.000 IDR</div>
+        </label>
+      </div>
+    </div>
+
+    <button class="btn-submit" onclick="doGoToPayment()">Go to payment</button>
+    <span class="btn-back-link" onclick="location.href='auth.html'">← Back to details</span>
+  </div>
+
+  <div class="chk-sidebar">
+    <h3>Ringkasan Pesanan</h3>
+    <div class="chk-sb-line"><span>Subtotal</span><span id="sbSub">0 IDR</span></div>
+    <div class="chk-sb-line"><span>Pengiriman</span><span id="sbShip">Gratis</span></div>
+    <div class="chk-sb-line total"><span>Total</span><span id="sbTotal">0 IDR</span></div>
+  </div>
+</div>
+
+<footer class="site-footer"><div class="container">
+  <div class="footer-top">
+    <div class="footer-brand"><div class="footer-logo"><img src="public/images/logo.png" alt="CZEN SHOP" style="height:32px;width:auto;vertical-align:middle;"><span>CZEN SHOP</span></div><p>Hadir sebagai tempat yang menggabungkan inspirasi desain keramik berkualitas dengan sudut photobooth estetik.</p></div>
+    <div class="footer-col"><h4>Discovery</h4><ul><li onclick="location.href='product.html'" style="cursor:pointer;">New season</li><li onclick="location.href='product.html'" style="cursor:pointer;">Most searched</li><li onclick="location.href='product.html'" style="cursor:pointer;">Most selled</li></ul></div>
+    <div class="footer-col"><h4>About</h4><ul><li>Help</li><li onclick="location.href='shipping.html'" style="cursor:pointer;">Shipping</li><li>Affiliate</li></ul></div>
+    <div class="footer-col"><h4>Info</h4><ul><li>Contact us</li><li>Privacy Policies</li><li>Terms &amp; Conditions</li></ul></div>
+  </div>
+  <div class="footer-address">Ngantang, Kabupaten Malang</div>
+  <div class="footer-bottom"><span>©CzenShop2020 All Rights Reserved.</span><span>Designed by AINUN</span></div>
+</div></footer>
+
+<script src="public/js/database.js"></script>
+<script src="public/js/app.js"></script>
+<script>
+(function(){
+  var C = window.CZEN;
+  var shipCost = 0;
+
+  // Load shipping info
+  try {
+    var s = JSON.parse(sessionStorage.getItem('czen_shipping') || '{}');
+    document.getElementById('dispContact').textContent = s.contact || '-';
+    document.getElementById('dispAddress').textContent = s.address || '-';
+    document.getElementById('dispCity').textContent = s.city || '-';
+    document.getElementById('dispProvince').textContent = s.province || '-';
+    document.getElementById('dispPostal').textContent = s.postal || '-';
+  } catch(e) {}
+
+  renderSidebar();
+
+  window.selectShip = function(radio){
+    document.querySelectorAll('.ship-option').forEach(function(l){ l.classList.remove('selected'); });
+    radio.closest('.ship-option').classList.add('selected');
+    if(radio.value==='express') shipCost = 15000;
+    else if(radio.value==='same-day') shipCost = 35000;
+    else shipCost = 0;
+    renderSidebar();
+  };
+
+  function renderSidebar(){
+    var sub = C.cart.total();
+    var total = sub + shipCost;
+    document.getElementById('sbSub').textContent = C.fmt(sub) + ' IDR';
+    document.getElementById('sbShip').textContent = shipCost === 0 ? 'Gratis' : C.fmt(shipCost) + ' IDR';
+    document.getElementById('sbTotal').textContent = C.fmt(total) + ' IDR';
+  }
+
+  window.doGoToPayment = function(){
+    sessionStorage.setItem('czen_shipCost', shipCost);
+    location.href = 'payment.html';
+  };
+})();
+</script>
+</body>
+</html>
