@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CZEN SHOP - Detail Produk</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  .dp-page { min-height:100vh; display:flex; flex-direction:column; background:#fff; }
+  .dp-body { flex:1; max-width:1140px; margin:0 auto; padding:40px 0 60px; width:100%; box-sizing:border-box; }
+  .dp-main { display:grid; grid-template-columns:480px 1fr; gap:0; background:#fff; }
+  /* ── LEFT: Image ─────────────── */
+  .dp-left { display:flex; flex-direction:column; align-items:center; }
+  .dp-img-wrap { width:440px; height:360px; background:#F7F8FA; border-radius:4px; overflow:hidden; display:flex; align-items:center; justify-content:center; }
+  .dp-img-wrap img { width:100%; height:100%; object-fit:cover; }
+  .dp-desc-bottom { text-align:center; margin-top:18px; max-width:440px; }
+  .dp-desc-bottom p { font-family:Poppins; font-size:1.05rem; color:#272727; line-height:1.5; margin:0; }
+  .dp-desc-bottom .free { color:#56B280; font-family:Roboto; font-weight:700; font-size:1rem; margin-top:4px; display:block; }
+  /* ── RIGHT: Info ──────────────── */
+  .dp-right { padding-left:30px; display:flex; flex-direction:column; gap:18px; }
+  .dp-right .dp-name { font-family:Poppins; font-size:1.5rem; font-weight:600; color:#1D252C; line-height:1.3; }
+  .dp-right .dp-price { font-family:Poppins; font-size:1.5rem; font-weight:600; color:#56B280; }
+  .dp-qty-label { font-family:Roboto; font-size:1rem; color:#272727; }
+  .qty-box { display:inline-flex; align-items:center; border:1px solid #56B280; border-radius:4px; overflow:hidden; }
+  .qty-box button { width:32px; height:32px; border:none; background:none; font-size:1.1rem; cursor:pointer; color:#56B280; font-family:Roboto; display:flex; align-items:center; justify-content:center; }
+  .qty-box .qty-val { width:40px; text-align:center; font-family:Roboto; font-size:1rem; font-weight:500; color:#1D252C; }
+  .btn-add { display:inline-flex; align-items:center; justify-content:center; gap:10px; width:350px; padding:13px 0; background:#56B280; color:white; border:none; border-radius:4px; font-size:1.05rem; font-weight:500; cursor:pointer; font-family:Roboto; }
+  .btn-add:hover { background:#479f80; }
+  .specs-box { border:1px solid #E6E6E6; border-radius:7px; padding:18px 20px; }
+  .specs-box .spec-row { font-size:0.95rem; font-family:'Alegreya Sans',sans-serif; color:#1D252C; line-height:1.7; }
+  .specs-box .spec-row strong { color:#1D252C; }
+  .specs-box .spec-row .val { color:#849A8E; }
+  .specs-box .spec-tags { display:flex; gap:14px; flex-wrap:wrap; margin-top:6px; font-size:0.88rem; font-family:'Alegreya Sans',sans-serif; color:#849A8E; }
+  .specs-box .spec-tags strong { color:#1D252C; }
+  .dp-back { color:#56B280; font-family:Roboto; font-size:0.9rem; cursor:pointer; text-decoration:underline; display:inline-block; }
+  .dp-img-wrap { position:relative; }
+  .dp-nav { position:absolute; top:50%; transform:translateY(-50%); width:34px; height:34px; border-radius:50%; background:rgba(255,255,255,0.92); border:1px solid #e0e0e0; cursor:pointer; font-size:1.15rem; color:#272727; display:flex; align-items:center; justify-content:center; z-index:5; box-shadow:0 2px 8px rgba(0,0,0,0.12); line-height:1; }
+  .dp-nav:hover { background:#fff; color:#56B280; }
+  .dp-nav.prev { left:10px; }
+  .dp-nav.next { right:10px; }
+  .dp-counter { position:absolute; bottom:8px; right:10px; background:rgba(0,0,0,0.55); color:#fff; font-family:Roboto; font-size:0.72rem; padding:2px 10px; border-radius:10px; z-index:5; }
+  .dp-thumbs { display:flex; gap:8px; margin-top:12px; flex-wrap:wrap; justify-content:center; }
+  .dp-thumb { width:60px; height:60px; border-radius:6px; border:2px solid #e0e0e0; overflow:hidden; cursor:pointer; background:#f7f8fa; padding:0; }
+  .dp-thumb img { width:100%; height:100%; object-fit:cover; display:block; }
+  .dp-thumb.active { border-color:#56B280; }
+
+  @media (max-width:960px) {
+    .dp-main { grid-template-columns:1fr; padding:0 24px; }
+    .dp-left { margin-bottom:24px; }
+    .dp-img-wrap { width:100%; height:auto; aspect-ratio:440/360; }
+    .dp-right { padding-left:0; }
+    .btn-add { width:100%; }
+  }
+</style>
+</head>
+<body class="dp-page">
+
+<header class="site-header">
+  <a href="home.html" class="logo" style="text-decoration:none;color:inherit;">
+    <img src="public/images/logo.png" alt="CZEN SHOP" style="height:52px;width:auto;display:block;margin:0 auto 2px;"><span style="font-size:0.95rem;font-weight:700;letter-spacing:0.5px;display:block;text-align:center;">CZEN SHOP</span>
+  </a>
+  <nav class="main-nav">
+    <a href="product.html">Produk</a><a href="home.html#tentang">Tentang</a><a href="home.html#hubungi">Hubungi Kami</a><a href="photobooth.html">Photobooth</a>
+  </nav>
+  <div class="header-icons">
+    <button aria-label="Akun" onclick="location.href='login.html'" style="cursor:pointer;background:none;border:none;font-size:1.2rem;">👤</button>
+    <button aria-label="Keranjang" onclick="location.href='cart.html'" style="cursor:pointer;background:none;border:none;font-size:1.2rem;position:relative;">🛒<span class="cart-badge" style="position:absolute;top:-6px;right:-8px;background:#56B280;color:white;border-radius:50%;width:16px;height:16px;font-size:9px;display:flex;align-items:center;justify-content:center;">0</span></button>
+  </div>
+</header>
+
+<div class="dp-body">
+  <div class="dp-main">
+
+    <!-- LEFT: Product Image + Description -->
+    <div class="dp-left">
+      <div class="dp-img-wrap">
+        <img id="dpImg" src="public/images/1.png" alt="Product">
+        <button class="dp-nav prev" id="dpPrev" onclick="dpSlide(-1)" style="display:none;">‹</button>
+        <button class="dp-nav next" id="dpNext" onclick="dpSlide(1)" style="display:none;">›</button>
+        <span class="dp-counter" id="dpCounter" style="display:none;">1/1</span>
+      </div>
+      <div class="dp-thumbs" id="dpThumbs" style="display:none;"></div>
+      <div class="dp-desc-bottom">
+        <p id="dpDesc">Dibuat secara HANDMADE dengan bahan bahan yang berkualitas tinggi</p>
+        <span class="free">🚚 Gratis Ongkir</span>
+      </div>
+    </div>
+
+    <!-- RIGHT: Name, Price, Qty, Button, Specs -->
+    <div class="dp-right">
+      <span class="dp-back" onclick="location.href='product.html'">← Kembali ke Produk</span>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div class="dp-name" id="dpName">Keramik Mickey Mouse®</div>
+        <button id="dpWish" onclick="toggleWish()" title="Simpan ke wishlist" style="background:none;border:none;font-size:1.5rem;cursor:pointer;line-height:1;">🤍</button>
+      </div>
+      <div class="dp-price" id="dpPrice" style="color:#56B280;">10.000 IDR</div>
+
+      <div id="dpColorsWrap" style="display:none;">
+        <span class="dp-qty-label">Pilih Warna</span>
+        <div id="dpColors" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;"></div>
+      </div>
+
+      <div>
+        <span class="dp-qty-label">Quantity</span>
+        <div class="qty-box" style="margin-top:6px;">
+          <button id="qtyMinus" onclick="changeQty(-1)">−</button>
+          <div class="qty-val" id="qtyVal">1</div>
+          <button id="qtyPlus" onclick="changeQty(1)">+</button>
+        </div>
+      </div>
+
+      <button class="btn-add" onclick="addToCart()">
+        <svg width="22" height="20" viewBox="0 0 25 24" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M0 2.25C0 2.05.08 1.86.22 1.72.36 1.58.55 1.5.75 1.5h2.27c.17 0 .33.06.46.16a.75.75 0 01.27.41l.61 2.43H21.88a.75.75 0 01.74.9l-1.51 7.5a1.5 1.5 0 01-1.48 1.33H6.23l.43 2.5h12.95c.2 0 .4.08.53.22a.75.75 0 01-.53 1.28H6.03a.75.75 0 01-.74-.66L3.03 5.41 2.43 3H.75A.75.75 0 010 2.25zM4.68 6l1.27 6.72L19.74 12l1.21-6H4.68zm2.86 12A2.26 2.26 0 105.3 20.88 2.26 2.26 0 007.54 18zm10.56 0a2.26 2.26 0 10-2.26 2.26 2.26 2.26 0 002.26-2.26zm-10.56 1.5a.75.75 0 110 1.5.75.75 0 010-1.5zm10.56 0a.75.75 0 110 1.5.75.75 0 010-1.5z" fill="white"/></svg>
+        + Tambah ke Keranjang
+      </button>
+
+      <div class="specs-box">
+        <div class="spec-row"><strong>Bahan:</strong> <span class="val" id="dpMaterial">Top grade Soy wax that delivers a smoke less, consistent burn</span></div>
+        <div class="spec-row"><strong>Tampilan:</strong> <span class="val" id="dpAppear">Premium quality ingredients with natural essential oils</span></div>
+        <div class="spec-tags">
+          <span><strong>Warna:</strong> <span class="val" id="dpColor">70-75 hours</span></span>
+          <span><strong>Ukuran:</strong> <span class="val" id="dpDim">10cm x 5cm</span></span>
+          <span><strong>Berat:</strong> <span class="val" id="dpWeight">400g</span></span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer class="site-footer"><div class="container">
+  <div class="footer-top">
+    <div class="footer-brand"><div class="footer-logo"><img src="public/images/logo.png" alt="CZEN SHOP" style="height:26px;width:auto;vertical-align:middle;"><span>CZEN SHOP</span></div><p>Hadir sebagai tempat yang menggabungkan inspirasi desain keramik berkualitas dengan sudut photobooth estetik.</p></div>
+    <div class="footer-col"><h4>Discovery</h4><ul><li onclick="location.href='product.html'" style="cursor:pointer;">New season</li><li onclick="location.href='product.html'" style="cursor:pointer;">Most searched</li><li onclick="location.href='product.html'" style="cursor:pointer;">Most selled</li></ul></div>
+    <div class="footer-col"><h4>About</h4><ul><li>Help</li><li onclick="location.href='shipping.html'" style="cursor:pointer;">Shipping</li><li>Affiliate</li></ul></div>
+    <div class="footer-col"><h4>Info</h4><ul><li>Contact us</li><li><a href="https://www.instagram.com/czen2020_shop/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">Instagram</a></li><li>Privacy Policies</li><li>Terms &amp; Conditions</li></ul></div>
+  </div>
+  <div class="footer-address">Ngantang, Kabupaten Malang</div>
+  <div class="footer-bottom"><span>©CzenShop2020 All Rights Reserved.</span><span>Designed by AINUN</span></div>
+</div></footer>
+
+<script src="public/js/database.js"></script>
+<script src="public/js/app.js"></script>
+<script>
+(function(){
+  var C=window.CZEN;
+  var params=new URLSearchParams(location.search);
+  var pid=parseInt(params.get('id'))||1;
+  var pname=decodeURIComponent(params.get('product')||'Keramik Foto Mickey');
+  var pimg=params.get('img')||'1';
+  var product=C.find(pid)||C.products.find(function(p){return p.name===pname;})||{id:pid,name:pname,img:pimg,price:10000,desc:{}};
+  var d=product.desc||{};
+
+  document.getElementById('dpName').textContent=product.name;
+  document.getElementById('dpPrice').textContent=C.fmt(product.price)+' IDR';
+  document.getElementById('dpDesc').textContent=d.detail||'Dibuat secara HANDMADE dengan bahan bahan yang berkualitas tinggi';
+  document.getElementById('dpMaterial').textContent=d.material||'Top grade Soy wax that delivers a smoke less, consistent burn';
+  document.getElementById('dpAppear').textContent=d.appearance||'Premium quality ingredients with natural essential oils';
+  document.getElementById('dpColor').textContent=d.color||'Multi-warna';
+  document.getElementById('dpDim').textContent=d.dimension||'10cm x 5cm';
+  document.getElementById('dpWeight').textContent=d.weight||'400g';
+
+  // ── Opsi warna (dikelola admin) ──
+  var colors = product.colors || [];
+  var selectedColor = null;
+  if (colors.length) {
+    var wrap = document.getElementById('dpColorsWrap');
+    var cEl = document.getElementById('dpColors');
+    wrap.style.display = '';
+    colors.forEach(function(c){
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.textContent = c;
+      b.style.cssText = 'padding:8px 16px;border:2px solid #e0e0e0;border-radius:20px;background:#fff;cursor:pointer;font-family:Roboto;font-size:0.9rem;color:#272727;';
+      b.onclick = function(){
+        selectedColor = c;
+        document.querySelectorAll('#dpColors button').forEach(function(x){
+          x.style.borderColor = '#e0e0e0'; x.style.color = '#272727'; x.style.fontWeight = '400';
+        });
+        b.style.borderColor = '#56B280'; b.style.color = '#56B280'; b.style.fontWeight = '600';
+      };
+      cEl.appendChild(b);
+    });
+  }
+
+  // ── Wishlist (khusus user) ──
+  window.toggleWish = function(){
+    var u = C.auth.getUser();
+    if(!u || C.auth.isAdmin()){ location.href='login.html'; return; }
+    C._wishlist.toggle(u.email, product.id);
+    renderWishBtn();
+  };
+  function renderWishBtn(){
+    var u = C.auth.getUser();
+    var on = u && !C.auth.isAdmin() && C._wishlist.has(u.email, product.id);
+    document.getElementById('dpWish').textContent = on ? '❤️' : '🤍';
+  }
+  renderWishBtn();
+
+  // ── Galeri gambar (multi-gambar opsional dari admin) ──
+  var rawImgs = (product.images && product.images.length) ? product.images.slice() : [String(product.img||'1')];
+  var gallery = rawImgs.map(function(src){
+    src = String(src||'1');
+    return src.indexOf('data:')===0 ? src : 'public/images/'+src+'.png';
+  });
+  var currentImg = 0;
+  function renderGallery(){
+    document.getElementById('dpImg').src = gallery[currentImg];
+    var multi = gallery.length > 1;
+    document.getElementById('dpPrev').style.display = multi ? '' : 'none';
+    document.getElementById('dpNext').style.display = multi ? '' : 'none';
+    var counter = document.getElementById('dpCounter');
+    counter.style.display = multi ? '' : 'none';
+    counter.textContent = (currentImg+1)+'/'+gallery.length;
+    var thumbs = document.getElementById('dpThumbs');
+    thumbs.style.display = multi ? '' : 'none';
+    if(!multi){ thumbs.innerHTML=''; return; }
+    thumbs.innerHTML='';
+    gallery.forEach(function(src, i){
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'dp-thumb'+(i===currentImg?' active':'');
+      b.innerHTML = '<img src="'+src+'" alt="">';
+      b.onclick = function(){ currentImg = i; renderGallery(); };
+      thumbs.appendChild(b);
+    });
+  }
+  window.dpSlide = function(dir){ currentImg = (currentImg+dir+gallery.length)%gallery.length; renderGallery(); };
+  renderGallery();
+
+  var qty=1;
+  window.changeQty=function(delta){
+    qty=Math.max(1,qty+delta);
+    document.getElementById('qtyVal').textContent=qty;
+    document.getElementById('qtyMinus').style.color=qty<=1?'#ccc':'#56B280';
+    document.getElementById('qtyMinus').style.cursor=qty<=1?'default':'pointer';
+  };
+
+  window.addToCart=function(){
+    if(colors.length && !selectedColor){ alert('Silakan pilih warna terlebih dahulu.'); return; }
+    C.cart.add(product.id, qty, selectedColor || null);
+    alert(product.name + (selectedColor ? ' ('+selectedColor+')' : '') + ' (x'+qty+') ditambahkan ke keranjang!');
+    location.href='cart.html';
+  };
+})();
+</script>
+</body>
+</html>

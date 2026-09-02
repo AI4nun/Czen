@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CZEN SHOP - Pembayaran Berhasil</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  .receipt-page { min-height: 100vh; display: flex; flex-direction: column; background: #fff; }
+  .receipt-body { flex: 1; max-width: 1200px; margin: 0 auto; padding: 40px; width: 100%; box-sizing: border-box; display: grid; grid-template-columns: 1fr 380px; gap: 50px; align-items: start; }
+  .receipt-main { text-align: center; padding-top: 30px; }
+  .chk-steps { display: flex; justify-content: center; gap: 8px; font-family: Roboto; font-size: 0.9rem; margin-bottom: 30px; color: #616161; }
+  .chk-steps .done { color: #56B280; }
+  .chk-steps span.sep { color: #ccc; }
+  .check-circle { width: 90px; height: 90px; margin: 0 auto 20px; border-radius: 50%; background: rgba(86,178,128,0.15); display: flex; align-items: center; justify-content: center; }
+  .check-circle svg { width: 44px; height: 44px; }
+  .receipt-main h1 { font-family: Poppins; font-size: 1.8rem; font-weight: 700; color: #272727; margin-bottom: 8px; }
+  .receipt-main .order-num { color: #56B280; font-family: 'Alegreya Sans', sans-serif; font-size: 0.95rem; margin-bottom: 16px; }
+  .receipt-main .thank-you { color: #818181; font-family: 'Alegreya Sans', sans-serif; font-size: 1rem; max-width: 480px; margin: 0 auto 30px; line-height: 1.5; }
+  .btn-shop { display: inline-block; padding: 15px 40px; background: #56B280; color: white; border: none; border-radius: 6px; font-size: 1.1rem; font-weight: 600; cursor: pointer; font-family: Roboto; text-decoration: none; }
+  .btn-shop:hover { background: #479f80; }
+  .btn-print { color: #56B280; font-family: Roboto; font-size: 1rem; cursor: pointer; text-decoration: underline; display: inline-block; margin-top: 20px; }
+  .chk-sidebar { background: #f7f8fa; border-radius: 10px; padding: 24px; position: sticky; top: 20px; }
+  .chk-sidebar h3 { font-family: Poppins; font-size: 1rem; font-weight: 600; color: #272727; margin-bottom: 16px; }
+  .chk-sb-line { display: flex; justify-content: space-between; padding: 4px 0; font-family: Roboto; font-size: 0.9rem; color: #616161; }
+  .chk-sb-line.total { font-size: 1.2rem; font-weight: 700; color: #56B280; margin-top: 10px; padding-top: 10px; border-top: 2px solid #ddd; }
+  .chk-sb-line.paid { color: #56B280; font-weight: 600; }
+  .order-details { background: #f9fafb; border-radius: 8px; padding: 16px 20px; margin-top: 24px; text-align: left; font-family: 'Alegreya Sans', sans-serif; font-size: 0.92rem; color: #272727; line-height: 1.8; }
+  .order-details strong { font-weight: 600; }
+  @media(max-width:860px){ .receipt-body { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body class="receipt-page">
+
+<header class="site-header">
+  <a href="home.html" class="logo" style="text-decoration:none;color:inherit;"><img src="public/images/logo.png" alt="CZEN SHOP" style="height:52px;width:auto;display:block;margin:0 auto 2px;"><span style="font-size:0.95rem;font-weight:700;letter-spacing:0.5px;display:block;text-align:center;">CZEN SHOP</span></a>
+  <nav class="main-nav">
+    <a href="product.html">Produk</a><a href="home.html#tentang">Tentang</a><a href="home.html#hubungi">Hubungi Kami</a><a href="photobooth.html">Photobooth</a>
+  </nav>
+  <div class="header-icons">
+    <button aria-label="Akun" onclick="location.href='login.html'" style="cursor:pointer;background:none;border:none;font-size:1.2rem;">👤</button>
+    <button aria-label="Keranjang" onclick="location.href='cart.html'" style="cursor:pointer;background:none;border:none;font-size:1.2rem;position:relative;">🛒<span class="cart-badge" style="position:absolute;top:-6px;right:-8px;background:#56B280;color:white;border-radius:50%;width:16px;height:16px;font-size:9px;display:flex;align-items:center;justify-content:center;">0</span></button>
+  </div>
+</header>
+
+<div class="receipt-body">
+  <div class="receipt-main">
+    <div class="chk-steps">
+      <span class="done">Cart</span><span class="sep">›</span>
+      <span class="done">Details</span><span class="sep">›</span>
+      <span class="done">Shipping</span><span class="sep">›</span>
+      <span class="done">Payment</span>
+    </div>
+
+    <div class="check-circle">
+      <svg viewBox="0 0 52 41" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M43.03 1.36a6.4 6.4 0 016.69 7.92L24.77 39.11a6.05 6.05 0 01-6.75 0L1.49 22.7a6.4 6.4 0 01-.88-8.65 6.05 6.05 0 017.5-1.57L21.2 29.15 42.91 1.5c.04-.05.08-.1.12-.14z" fill="#56B280" fill-opacity="0.6"/></svg>
+    </div>
+
+    <h1>Payment Confirmed</h1>
+    <div class="order-num" id="orderNum">ORDER #---</div>
+    <div class="thank-you">
+      Terima kasih telah berbelanja di CZEN SHOP! Pesanan Anda telah dikonfirmasi dan akan segera diproses. 
+      Estimasi pengiriman dalam 2-3 hari kerja. Silakan cek email Anda untuk update status pesanan.
+    </div>
+
+    <a href="product.html" class="btn-shop">Back to shopping</a>
+    <br>
+    <span class="btn-print" onclick="window.print()">Print receipt</span>
+
+    <div class="order-details" id="orderDetails"></div>
+  </div>
+
+  <div class="chk-sidebar">
+    <h3>Ringkasan Pesanan</h3>
+    <div id="sbItems"></div>
+    <div class="chk-sb-line"><span>Subtotal</span><span id="sbSub">0 IDR</span></div>
+    <div class="chk-sb-line"><span>Pengiriman</span><span id="sbShip">-</span></div>
+    <div class="chk-sb-line total"><span>Total</span><span id="sbTotal">0 IDR</span></div>
+    <div class="chk-sb-line paid"><span>Status</span><span>✔ Paid</span></div>
+    <div class="chk-sb-line"><span>Metode</span><span id="sbMethod">-</span></div>
+  </div>
+</div>
+
+<footer class="site-footer"><div class="container">
+  <div class="footer-top">
+    <div class="footer-brand"><div class="footer-logo"><img src="public/images/logo.png" alt="CZEN SHOP" style="height:32px;width:auto;vertical-align:middle;"><span>CZEN SHOP</span></div><p>Hadir sebagai tempat yang menggabungkan inspirasi desain keramik berkualitas dengan sudut photobooth estetik.</p></div>
+    <div class="footer-col"><h4>Discovery</h4><ul><li onclick="location.href='product.html'" style="cursor:pointer;">New season</li><li onclick="location.href='product.html'" style="cursor:pointer;">Most searched</li><li onclick="location.href='product.html'" style="cursor:pointer;">Most selled</li></ul></div>
+    <div class="footer-col"><h4>About</h4><ul><li>Help</li><li onclick="location.href='shipping.html'" style="cursor:pointer;">Shipping</li><li>Affiliate</li></ul></div>
+    <div class="footer-col"><h4>Info</h4><ul><li>Contact us</li><li><a href="https://www.instagram.com/czen2020_shop/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">Instagram</a></li><li>Privacy Policies</li><li>Terms &amp; Conditions</li></ul></div>
+  </div>
+  <div class="footer-address">Ngantang, Kabupaten Malang</div>
+  <div class="footer-bottom"><span>©CzenShop2020 All Rights Reserved.</span><span>Designed by AINUN</span></div>
+</div></footer>
+
+<script src="public/js/database.js"></script>
+<script src="public/js/app.js"></script>
+<script>
+(function(){
+  var C = window.CZEN;
+  var order, shipCost;
+
+  try {
+    order = JSON.parse(sessionStorage.getItem('czen_order') || '{}');
+  } catch(e) { order = {}; }
+
+  shipCost = order.shipCost || parseInt(sessionStorage.getItem('czen_shipCost')||'0');
+  var total = C.cart.total() + shipCost;
+
+  document.getElementById('orderNum').textContent = 'ORDER #' + (order.id || '---');
+
+  // Sidebar items
+  var items = C.cart.items();
+  var sbHTML = '';
+  items.forEach(function(i){
+    sbHTML += '<div class="chk-sb-line"><span>'+i.name+(i.color?' ('+i.color+')':'')+' x'+i.qty+'</span><span>'+C.fmt(i.sub)+' IDR</span></div>';
+  });
+  document.getElementById('sbItems').innerHTML = sbHTML;
+  document.getElementById('sbSub').textContent = C.fmt(C.cart.total()) + ' IDR';
+  document.getElementById('sbShip').textContent = shipCost===0?'Gratis':C.fmt(shipCost)+' IDR';
+  document.getElementById('sbTotal').textContent = C.fmt(total) + ' IDR';
+  document.getElementById('sbMethod').textContent = (order.method==='QRIS' ? '📱 QRIS' : '💳 Credit Card');
+
+  // Order details
+  try {
+    var s = JSON.parse(sessionStorage.getItem('czen_shipping') || '{}');
+    var detailHTML = '<strong>Detail Pesanan</strong><br>'+
+      'Order ID: '+(order.id||'-')+'<br>'+
+      'Tanggal: '+new Date().toLocaleDateString('id-ID',{year:'numeric',month:'long',day:'numeric'})+'<br>'+
+      'Kontak: '+(s.contact||'-')+'<br>'+
+      'Alamat: '+(s.address||'-')+', '+(s.city||'')+' '+(s.province||'')+'<br>'+
+      'Pengiriman: '+(shipCost===0?'Standard (Gratis)':shipCost===15000?'Express (15.000 IDR)':'Same Day (35.000 IDR)')+'<br>'+
+      'Pembayaran: '+(order.method==='QRIS' ? 'QRIS (E-Wallet)' : 'Kartu Kredit ****'+(order.cardLast||'****'))+'';
+    document.getElementById('orderDetails').innerHTML = detailHTML;
+  } catch(e) {}
+
+  // Save order to admin panel (capture items BEFORE clearing cart)
+  if (order && order.id) {
+    order.email = (window.CZEN.auth.getUser()||{}).email || '';
+    order.items = C.cart.items();
+    order.status = 'Paid';
+    window.CZEN._orders.add(order);
+  }
+
+  C.cart.clear();
+  sessionStorage.removeItem('czen_shipCost');
+  sessionStorage.removeItem('czen_order');
+})();
+</script>
+</body>
+</html>
