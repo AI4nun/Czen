@@ -100,6 +100,8 @@
         <div id="dpColors" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;"></div>
       </div>
 
+      <div id="dpStock" style="font-family:Roboto;font-size:0.9rem;color:#56B280;font-weight:600;"></div>
+
       <div>
         <span class="dp-qty-label">Quantity</span>
         <div class="qty-box" style="margin-top:6px;">
@@ -133,7 +135,7 @@
     <div class="footer-brand"><div class="footer-logo"><img src="public/images/logo.png" alt="CZEN SHOP" style="height:26px;width:auto;vertical-align:middle;"><span>CZEN SHOP</span></div><p>Hadir sebagai tempat yang menggabungkan inspirasi desain keramik berkualitas dengan sudut photobooth estetik.</p></div>
     <div class="footer-col"><h4>Discovery</h4><ul><li onclick="location.href='product.html'" style="cursor:pointer;">New season</li><li onclick="location.href='product.html'" style="cursor:pointer;">Most searched</li><li onclick="location.href='product.html'" style="cursor:pointer;">Most selled</li></ul></div>
     <div class="footer-col"><h4>About</h4><ul><li>Help</li><li onclick="location.href='shipping.html'" style="cursor:pointer;">Shipping</li><li>Affiliate</li></ul></div>
-    <div class="footer-col"><h4>Info</h4><ul><li>Contact us</li><li><a href="https://www.instagram.com/czen2020_shop/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">Instagram</a></li><li>Privacy Policies</li><li>Terms &amp; Conditions</li></ul></div>
+    <div class="footer-col"><h4>Info</h4><ul><li>Contact us</li><li>Privacy Policies</li><li>Terms &amp; Conditions</li></ul></div>
   </div>
   <div class="footer-address">Ngantang, Kabupaten Malang</div>
   <div class="footer-bottom"><span>©CzenShop2020 All Rights Reserved.</span><span>Designed by AINUN</span></div>
@@ -163,6 +165,28 @@
   // ── Opsi warna (dikelola admin) ──
   var colors = product.colors || [];
   var selectedColor = null;
+
+  // ── Info stok & terjual (per warna) ──
+  function renderStock(){
+    var el = document.getElementById('dpStock');
+    var k = colors.length ? (selectedColor || null) : '';
+    var st = C.stockOf(product, k);
+    var sold = C.soldOf(product, k);
+    var txt;
+    if (st === null || st === undefined) txt = 'Stok: Tersedia';
+    else if (st <= 0) txt = 'Stok: Habis';
+    else txt = 'Stok: ' + st;
+    txt += ' • Terjual: ' + sold;
+    el.textContent = txt;
+    var out = (st !== null && st !== undefined && st <= 0);
+    el.style.color = out ? '#e74c3c' : '#56B280';
+    var btn = document.querySelector('.btn-add');
+    if(btn){
+      btn.style.opacity = out ? '0.5' : '';
+      btn.style.cursor = out ? 'not-allowed' : 'pointer';
+    }
+  }
+
   if (colors.length) {
     var wrap = document.getElementById('dpColorsWrap');
     var cEl = document.getElementById('dpColors');
@@ -178,10 +202,12 @@
           x.style.borderColor = '#e0e0e0'; x.style.color = '#272727'; x.style.fontWeight = '400';
         });
         b.style.borderColor = '#56B280'; b.style.color = '#56B280'; b.style.fontWeight = '600';
+        renderStock();
       };
       cEl.appendChild(b);
     });
   }
+  renderStock();
 
   // ── Wishlist (khusus user) ──
   window.toggleWish = function(){
@@ -238,6 +264,10 @@
 
   window.addToCart=function(){
     if(colors.length && !selectedColor){ alert('Silakan pilih warna terlebih dahulu.'); return; }
+    var k = colors.length ? selectedColor : '';
+    var st = C.stockOf(product, k);
+    if (st !== null && st !== undefined && st <= 0){ alert('Stok produk ini sedang habis.'); return; }
+    if (st !== null && st !== undefined && qty > st){ alert('Stok tidak cukup. Sisa stok: '+st); return; }
     C.cart.add(product.id, qty, selectedColor || null);
     alert(product.name + (selectedColor ? ' ('+selectedColor+')' : '') + ' (x'+qty+') ditambahkan ke keranjang!');
     location.href='cart.html';
