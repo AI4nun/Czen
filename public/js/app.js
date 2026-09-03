@@ -63,11 +63,24 @@
 
   function saveProducts(){ persist('czen_products', JSON.stringify(products)); }
 
-  // ── Migration: beri opsi warna default hanya jika produk belum punya field warna ──
+  // ── Migration: field warna, stok, terjual & tanggal dibuat untuk produk lama ──
   (function(){
     var changed = false;
     products.forEach(function(p){
       if (!p.colors) { p.colors = ['Putih','Hitam','Merah','Biru']; changed = true; }
+      if (typeof p.createdAt === 'undefined') { p.createdAt = null; changed = true; }
+      if (!p.stocks) {
+        var st = {};
+        if (p.colors && p.colors.length) { p.colors.forEach(function(c){ st[c] = null; }); }
+        else { st[''] = null; }
+        p.stocks = st; changed = true;
+      }
+      if (!p.solds) {
+        var sd = {};
+        if (p.colors && p.colors.length) { p.colors.forEach(function(c){ sd[c] = 0; }); }
+        else { sd[''] = 0; }
+        p.solds = sd; changed = true;
+      }
     });
     if (changed) saveProducts();
   })();
@@ -144,15 +157,76 @@
       return s.indexOf('data:')===0 ? s : 'public/images/'+s+'.png';
     },
 
+    // ── Stok & terjual (per warna) ────────────────────
+    stockOf: function(p, color){
+      var k = color || '';
+      var s = (p && p.stocks) ? p.stocks[k] : undefined;
+      return (s === null || s === undefined) ? null : s;
+    },
+    soldOf: function(p, color){
+      var k = color || '';
+      return (p && p.solds && p.solds[k]) ? p.solds[k] : 0;
+    },
+    soldTotal: function(p){
+      var t = 0;
+      if (p && p.solds) { for (var k in p.solds) { t += (p.solds[k] || 0); } }
+      return t;
+    },
+    stockLabel: function(p, color){
+      var s = this.stockOf(p, color);
+      return (s === null || s === undefined) ? 'Tersedia' : String(s);
+    },
+    // Total stok seluruh varian warna; null = ada yang tak terbatas
+    stockTotal: function(p){
+      var keys = (p && p.colors && p.colors.length) ? p.colors : [''];
+      var anyNull = false, sum = 0;
+      keys.forEach(function(k){
+        var v = (p && p.stocks) ? p.stocks[k] : undefined;
+        if (v === null || v === undefined) anyNull = true;
+        else sum += (v || 0);
+      });
+      return anyNull ? null : sum;
+    },
+
     // ── Product CRUD (admin) ───────────────────────────
     _products: {
       list: function(){ return products; },
       add: function(p){
         var maxId = products.reduce(function(m,x){return Math.max(m,x.id);},0);
         p.id = maxId + 1;
+        p.createdAt = p.createdAt || new Date().toISOString();
+        if (!p.stocks) {
+          var st = {};
+          if (p.colors && p.colors.length) { p.colors.forEach(function(c){ st[c] = null; }); }
+          else { st[''] = null; }
+          p.stocks = st;
+        }
+        if (!p.solds) {
+          var sd = {};
+          if (p.colors && p.colors.length) { p.colors.forEach(function(c){ sd[c] = 0; }); }
+          else { sd[''] = 0; }
+          p.solds = sd;
+        }
         products.push(p);
         saveProducts();
         return p;
+      },
+      recordSale: function(items){
+        var changed = false;
+        (items || []).forEach(function(it){
+          var p = products.find(function(x){ return x.id === it.id; });
+          if (!p) return;
+          var k = it.color || '';
+          if (!p.stocks) p.stocks = {};
+          if (!p.solds) p.solds = {};
+          var cur = p.stocks[k];
+          if (cur !== null && cur !== undefined) {
+            p.stocks[k] = Math.max(0, (cur || 0) - (it.qty || 1));
+          }
+          p.solds[k] = (p.solds[k] || 0) + (it.qty || 1);
+          changed = true;
+        });
+        if (changed) saveProducts();
       },
       update: function(id, data){
         var idx = products.findIndex(function(p){return p.id===id;});
