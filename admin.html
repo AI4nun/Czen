@@ -120,7 +120,7 @@
     <h2>Manajemen Produk</h2>
     <button class="btn-add" onclick="openProdModal()">+ Tambah Produk</button>
     <input class="search" placeholder="🔍 Cari..." oninput="showProducts(this.value)">
-    <div style="overflow-x:auto;"><table><thead><tr><th>ID</th><th>Gambar</th><th>Nama</th><th style="text-align:right;">Harga</th><th style="text-align:center;">Aksi</th></tr></thead><tbody id="prodTable"></tbody></table></div>
+    <div style="overflow-x:auto;"><table><thead><tr><th>ID</th><th>Gambar</th><th>Nama</th><th style="text-align:right;">Harga</th><th style="text-align:center;">Stok</th><th style="text-align:center;">Terjual</th><th style="text-align:center;">Aksi</th></tr></thead><tbody id="prodTable"></tbody></table></div>
   </div>
 
   <div class="admin-panel" id="panel-orders" style="display:none;">
@@ -180,8 +180,13 @@
       <div><label>Bahan</label><input type="text" id="prodMaterial" placeholder="Keramik grade A"></div>
       <div>
         <label>Pilihan Warna (opsi pilih user)</label>
-        <input type="text" id="prodColors" placeholder="Misal: Putih, Hitam, Merah, Biru">
+        <input type="text" id="prodColors" placeholder="Misal: Putih, Hitam, Merah, Biru" onchange="buildStockEditor()">
         <div style="font-size:0.72rem;color:#888;margin-top:4px;font-family:Roboto;">Pisahkan dengan koma. Opsi ini tampil di halaman detail produk.</div>
+      </div>
+      <div>
+        <label>Stok per Warna (opsional)</label>
+        <div id="prodStocks" style="margin-top:4px;"></div>
+        <div style="font-size:0.72rem;color:#888;margin-top:4px;font-family:Roboto;">Kosongkan = stok tak terbatas (∞). Angka = stok tersedia. "Terjual" terhitung otomatis dari pesanan.</div>
       </div>
     </div>
     <div style="margin-top:12px;">
@@ -336,6 +341,30 @@
     });
   };
 
+  /* ── EDITOR STOK PER WARNA ──────────── */
+  var buildStockEditor = window.buildStockEditor = function(){
+    var wrap = document.getElementById('prodStocks');
+    if(!wrap) return;
+    wrap.innerHTML = '';
+    var colors = (document.getElementById('prodColors').value.trim() || '')
+      .split(',').map(function(s){ return s.trim(); }).filter(Boolean);
+    var editingId = document.getElementById('prodId').value;
+    var editingProd = editingId ? C.find(parseInt(editingId)) : null;
+    var keys = colors.length ? colors : [''];
+    keys.forEach(function(k){
+      var row = document.createElement('div');
+      row.style.cssText = 'display:flex;align-items:center;gap:8px;margin-bottom:6px;';
+      var label = colors.length ? k : 'Umum';
+      var stVal = '';
+      if (editingProd && editingProd.stocks && editingProd.stocks[k] !== null && editingProd.stocks[k] !== undefined) stVal = editingProd.stocks[k];
+      var sold = (editingProd && editingProd.solds && editingProd.solds[k]) || 0;
+      row.innerHTML = '<span style="width:88px;font-family:Roboto;font-size:0.8rem;font-weight:600;color:#272727;flex-shrink:0;">'+label+'</span>'+
+        '<input type="number" min="0" data-color="'+label.replace(/"/g,'&quot;')+'" placeholder="∞ (tak terbatas)" value="'+stVal+'" style="flex:1;margin-bottom:0;">'+
+        '<span style="font-family:Roboto;font-size:0.75rem;color:#888;white-space:nowrap;">Terjual: '+sold+'</span>';
+      wrap.appendChild(row);
+    });
+  };
+
   /* ── GALERI GAMBAR PRODUK ───────────── */
   var prodGallery = [];
   function renderProdGallery(){
@@ -394,10 +423,13 @@
     var h = '';
     list.forEach(function(p){
       var src = C.thumb(p);
+      var st = C.stockTotal(p);
+      var stTxt = (st === null || st === undefined) ? '∞' : st;
       h += '<tr><td>'+p.id+'</td><td><img src="'+src+'" style="width:50px;height:40px;object-fit:cover;border-radius:4px;"></td><td>'+p.name+'</td><td style="text-align:right;">'+F(p.price)+' IDR</td>'+
+        '<td style="text-align:center;">'+stTxt+'</td><td style="text-align:center;">'+C.soldTotal(p)+'</td>'+
         '<td style="text-align:center;"><div class="actions" style="justify-content:center;"><button class="btn-act btn-edit" onclick="editProd('+p.id+')">Edit</button><button class="btn-act btn-del" onclick="delProd('+p.id+')">Hapus</button></div></td></tr>';
     });
-    if(!h) h='<tr><td colspan="5" style="text-align:center;color:#aaa;padding:30px;">Belum ada produk.</td></tr>';
+    if(!h) h='<tr><td colspan="7" style="text-align:center;color:#aaa;padding:30px;">Belum ada produk.</td></tr>';
     document.getElementById('prodTable').innerHTML = h;
   };
 
@@ -427,6 +459,7 @@
         prodGallery = (p.images && p.images.length) ? p.images.slice() : [];
         document.getElementById('prodImgAdd').value = '';
         renderProdGallery();
+        buildStockEditor();
       }
     } else {
       document.getElementById('prodModalTitle').textContent='Tambah Produk';
@@ -436,6 +469,7 @@
       prodGallery = [];
       document.getElementById('prodImgAdd').value = '';
       renderProdGallery();
+      buildStockEditor();
     }
   };
   var editProd = window.editProd = function(id){ openProdModal(id); };
@@ -457,6 +491,19 @@
         .split(',').map(function(s){ return s.trim(); }).filter(Boolean),
       images: prodGallery.slice()
     };
+    // Stok per warna (kosong = tak terbatas) + pertahankan data terjual
+    var stockKeys = data.colors.length ? data.colors : [''];
+    var stocks = {};
+    stockKeys.forEach(function(k){
+      var inp = document.querySelector('#prodStocks input[data-color="'+k.replace(/"/g,'&quot;')+'"]');
+      var v = inp ? inp.value.trim() : '';
+      stocks[k] = (v === '') ? null : Math.max(0, parseInt(v, 10) || 0);
+    });
+    var existingProd = id ? C.find(parseInt(id)) : null;
+    var solds = (existingProd && existingProd.solds) ? existingProd.solds : {};
+    stockKeys.forEach(function(k){ if(!(k in solds)) solds[k] = 0; });
+    data.stocks = stocks;
+    data.solds = solds;
     // Gambar utama mengikuti galeri hanya jika referensinya pendek (bukan base64 besar)
     if(data.images.length && data.images[0].indexOf('data:') !== 0){ data.img = data.images[0]; }
     if(!data.name){ alert('Nama produk wajib diisi.'); return; }
