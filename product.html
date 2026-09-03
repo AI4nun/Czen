@@ -140,7 +140,6 @@
           <h4>Info</h4>
           <ul>
             <li>Contact us</li>
-            <li><a href="https://www.instagram.com/czen2020_shop/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">Instagram</a></li>
             <li>Privacy Policies</li>
             <li>Terms &amp; Conditions</li>
           </ul>
@@ -183,6 +182,9 @@
           var imgSrc = C.thumb(p);
           var name = p.name;
           var price = C.fmt(p.price||10000);
+          var st = C.stockTotal(p);
+          var stTxt = (st === null || st === undefined) ? 'Stok: Tersedia' : (st <= 0 ? 'Stok: Habis' : 'Stok: '+st);
+          var sold = C.soldTotal(p);
           var card = document.createElement('div');
           card.className = 'product-card';
           card.style.position = 'relative';
@@ -194,6 +196,7 @@
               '<div class="product-info">'+
                 '<div class="product-name">'+name+'</div>'+
                 '<div class="product-price">'+price+' IDR</div>'+
+                '<div style="font-size:0.72rem;color:#888;font-family:Roboto;margin-top:3px;">'+stTxt+' • Terjual: '+sold+'</div>'+
               '</div>'+
             '</a>';
           var heart = document.createElement('button');
